@@ -1,6 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import { View, Text, Button } from 'react-native';
-import { initializeApp } from 'firebase/app';
+import React, { useEffect, useState } from "react";
+import { View, Image, Text, TouchableOpacity, StyleSheet } from "react-native";
+import { initializeApp } from "firebase/app";
+import StopwatchView from "./StopwatchCard/StopwatchCard";
+import addIcon from ".././../assets/add.png";
 import {
   getFirestore,
   collection,
@@ -8,18 +10,19 @@ import {
   doc,
   setDoc,
   deleteDoc,
-} from 'firebase/firestore/lite';
-import uuid from 'react-native-uuid';
+  updateDoc,
+} from "firebase/firestore/lite";
+import uuid from "react-native-uuid";
 
 const firebaseConfig = {
-    apiKey: "AIzaSyDRrUVRi5m-fuBk45zt8LYQSiMjWP4-Cx8",
-    authDomain: "multi-stop-watches.firebaseapp.com",
-    projectId: "multi-stop-watches",
-    storageBucket: "multi-stop-watches.appspot.com",
-    messagingSenderId: "828912065120",
-    appId: "1:828912065120:web:65edc3e5ae64259c578105",
-    measurementId: "G-Y68N9Q6B7L"
-  };
+  apiKey: "AIzaSyDRrUVRi5m-fuBk45zt8LYQSiMjWP4-Cx8",
+  authDomain: "multi-stop-watches.firebaseapp.com",
+  projectId: "multi-stop-watches",
+  storageBucket: "multi-stop-watches.appspot.com",
+  messagingSenderId: "828912065120",
+  appId: "1:828912065120:web:65edc3e5ae64259c578105",
+  measurementId: "G-Y68N9Q6B7L"
+};
 
 initializeApp(firebaseConfig);
 
@@ -31,12 +34,12 @@ const Test = () => {
     const fetchStopwatches = async () => {
       try {
         const db = getFirestore();
-        const stopwatchCollection = collection(db, 'stopwatches');
+        const stopwatchCollection = collection(db, "stopwatches");
         const snapshot = await getDocs(stopwatchCollection);
         const fetchedStopwatches = snapshot.docs.map((doc) => doc.data());
         setStopwatches(fetchedStopwatches.map(startStopwatchLocally));
       } catch (error) {
-        console.error('Error fetching stopwatches:', error);
+        console.error("Error fetching stopwatches:", error);
       }
     };
 
@@ -48,17 +51,17 @@ const Test = () => {
     try {
       const newStopwatch = {
         id: uuid.v1(),
-        name: 'New Stopwatch',
+        name: "New Stopwatch",
         timestamp: new Date().toISOString(),
         elapsedSeconds: 0,
       };
 
       const db = getFirestore();
-      const stopwatchRef = doc(db, 'stopwatches', newStopwatch.id);
+      const stopwatchRef = doc(db, "stopwatches", newStopwatch.id);
       await setDoc(stopwatchRef, newStopwatch);
       setStopwatches([...stopwatches, startStopwatchLocally(newStopwatch)]);
     } catch (error) {
-      console.error('Error adding stopwatch:', error);
+      console.error("Error adding stopwatch:", error);
     }
   };
 
@@ -66,11 +69,36 @@ const Test = () => {
   const deleteStopwatch = async (stopwatchId) => {
     try {
       const db = getFirestore();
-      const stopwatchRef = doc(db, 'stopwatches', stopwatchId);
+      const stopwatchRef = doc(db, "stopwatches", stopwatchId);
       await deleteDoc(stopwatchRef);
-      setStopwatches(stopwatches.filter((stopwatch) => stopwatch.id !== stopwatchId));
+      setStopwatches(
+        stopwatches.filter((stopwatch) => stopwatch.id !== stopwatchId)
+      );
     } catch (error) {
-      console.error('Error deleting stopwatch:', error);
+      console.error("Error deleting stopwatch:", error);
+    }
+  };
+
+  // Rename a stopwatch in Firebase and update the state
+  const renameStopwatch = async (stopwatchId, newName) => {
+    try {
+      const db = getFirestore();
+      const stopwatchRef = doc(db, "stopwatches", stopwatchId);
+      await updateDoc(stopwatchRef, { name: newName });
+
+      setStopwatches((prevStopwatches) =>
+        prevStopwatches.map((prevStopwatch) => {
+          if (prevStopwatch.id === stopwatchId) {
+            return {
+              ...prevStopwatch,
+              name: newName,
+            };
+          }
+          return prevStopwatch;
+        })
+      );
+    } catch (error) {
+      console.error("Error renaming stopwatch:", error);
     }
   };
 
@@ -101,49 +129,99 @@ const Test = () => {
     };
   };
 
-  // Stop incrementing elapsed time for a stopwatch
-  const stopStopwatch = (stopwatchId) => {
-    try {
-      const updatedStopwatches = stopwatches.map((stopwatch) => {
-        if (stopwatch.id === stopwatchId) {
-          clearInterval(stopwatch.intervalId);
-          return {
-            ...stopwatch,
-            intervalId: null,
-          };
-        }
-        return stopwatch;
-      });
-      setStopwatches(updatedStopwatches);
-    } catch (error) {
-      console.error('Error stopping stopwatch:', error);
-    }
-  };
-
   // Format the elapsed time in HH:mm:ss format
   const formatElapsedTime = (elapsedSeconds) => {
     const hours = Math.floor(elapsedSeconds / 3600);
     const minutes = Math.floor((elapsedSeconds % 3600) / 60);
     const seconds = elapsedSeconds % 60;
-    return `${hours.toString().padStart(2, '0')}:${minutes
+    return `${hours.toString().padStart(2, "0")}:${minutes
       .toString()
-      .padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+      .padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
   };
 
   return (
-    <View>
-      <Text>Stopwatches:</Text>
-      {stopwatches.map((stopwatch) => (
-        <View key={stopwatch.id}>
-          <Text>{stopwatch.name}</Text>
-          <Text>{formatElapsedTime(stopwatch.elapsedSeconds)}</Text>
-          <Button title="Stop" onPress={() => stopStopwatch(stopwatch.id)} />
-          <Button title="Delete" onPress={() => deleteStopwatch(stopwatch.id)} />
-        </View>
-      ))}
-      <Button title="Add Stopwatch" onPress={addStopwatch} />
+    <View style={styles.container}>
+      {/* Heading */}
+      <Text style={styles.heading}>Stopwatch</Text>
+      <View style={styles.background}>
+        {/* All the stopwatches will be here */}
+        {stopwatches.map((stopwatch) => (
+          <StopwatchView
+            key={stopwatch.id}
+            id={stopwatch.id}
+            name={stopwatch.name}
+            time={formatElapsedTime(stopwatch.elapsedSeconds)}
+            onStop={() => {
+              /* Handle stop button press */
+            }}
+            onDelete={() => deleteStopwatch(stopwatch.id)}
+            onRename={renameStopwatch}
+          />
+        ))}
+
+        <TouchableOpacity
+          style={styles.addButton}
+          onPress={addStopwatch}
+          activeOpacity={0.8}
+        >
+          <Image source={addIcon} style={styles.ClockIcon} />
+          {/* <Icon name="plus" size={24} color="#FFFFFF" /> */}
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    paddingTop: 50,
+    backgroundColor: "#1D0F4A",
+    height: "100%",
+    width: "100%",
+  },
+  heading: {
+    color: "#F9EAFF",
+    fontSize: 40,
+    fontWeight: "bold",
+    paddingBottom: 10,
+    textAlign: "left",
+    paddingLeft: "5%",
+
+    textShadowColor: '#4F3A7B',
+    textShadowOffset: { width: 1, height: 1 },
+    textShadowRadius: 2,
+  },
+  background: {
+    height: "90%",
+    backgroundColor: "#1D0F4A",
+    flex: 1,
+    alignItems: "center",
+    position: "relative",
+  },
+
+  ClockIcon:{
+    height: 65,
+    width: 65
+  },
+  addButton: {
+    position: "absolute",
+    bottom: 40,
+    right: 40,
+    backgroundColor: "#F9EAFF",
+    borderRadius: 50,
+    width: 10,
+    height: 10,
+    justifyContent: "center",
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
+});
 
 export default Test;
