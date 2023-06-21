@@ -21,7 +21,7 @@ const firebaseConfig = {
   storageBucket: "multi-stop-watches.appspot.com",
   messagingSenderId: "828912065120",
   appId: "1:828912065120:web:65edc3e5ae64259c578105",
-  measurementId: "G-Y68N9Q6B7L"
+  measurementId: "G-Y68N9Q6B7L",
 };
 
 initializeApp(firebaseConfig);
@@ -187,7 +187,7 @@ const styles = StyleSheet.create({
     textAlign: "left",
     paddingLeft: "5%",
 
-    textShadowColor: '#4F3A7B',
+    textShadowColor: "#4F3A7B",
     textShadowOffset: { width: 1, height: 1 },
     textShadowRadius: 2,
   },
@@ -199,9 +199,9 @@ const styles = StyleSheet.create({
     position: "relative",
   },
 
-  ClockIcon:{
+  ClockIcon: {
     height: 65,
-    width: 65
+    width: 65,
   },
   addButton: {
     position: "absolute",
