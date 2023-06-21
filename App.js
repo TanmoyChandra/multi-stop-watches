@@ -6,17 +6,14 @@ import NavigationTabs from "./src/navigation/tabs";
 
 export default function App() {
   return (
-    <NavigationContainer>
-      <NavigationTabs/>
+    <NavigationContainer style={styles.navigationContainer}>
+      <NavigationTabs />
     </NavigationContainer>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
+  navigationContainer: {
+    background: "red", // Replace with your desired background color
   },
 });

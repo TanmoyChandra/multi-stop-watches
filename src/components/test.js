@@ -141,8 +141,6 @@ const Test = () => {
 
   return (
     <View style={styles.container}>
-      {/* Heading */}
-      <Text style={styles.heading}>Stopwatch</Text>
       <View style={styles.background}>
         {/* All the stopwatches will be here */}
         {stopwatches.map((stopwatch) => (

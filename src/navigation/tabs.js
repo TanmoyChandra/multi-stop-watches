@@ -2,6 +2,18 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 import Test from "../components/test";
 
+import { TouchableRipple } from "react-native-paper";
+
+import user from "../../assets/navigation_icons/user.png";
+import settings from "../../assets/navigation_icons/settings.png";
+import stopwatch from "../../assets/navigation_icons/stopwatch.png";
+import bookmark from "../../assets/navigation_icons/bookmark.png";
+
+import user_fill from "../../assets/navigation_icons/user_fill.png";
+import settings_fill from "../../assets/navigation_icons/settings_fill.png";
+import stopwatch_fill from "../../assets/navigation_icons/stopwatch_fill.png";
+import bookmark_fill from "../../assets/navigation_icons/bookmark_fill.png";
+
 const Tab = createBottomTabNavigator();
 
 const NavigationTabs = () => {
@@ -9,6 +21,24 @@ const NavigationTabs = () => {
     <Tab.Navigator
       screenOptions={{
         tabBarShowLabel: false,
+        // headerShown: false,
+
+        headerTitleStyle: [
+          {
+            fontSize: 35,
+            color: "#F9EAFF",
+            fontWeight: "bold",
+            textAlign: "left",
+            textShadowColor: "#4F3A7B",
+            textShadowOffset: { width: 1, height: 1 },
+            textShadowRadius: 2,
+          },
+        ],
+        headerStyle: [
+          {
+            backgroundColor: "#1D0F4A",
+          },
+        ],
         tabBarStyle: [
           {
             position: "absolute",
@@ -24,10 +54,123 @@ const NavigationTabs = () => {
         ],
       }}
     >
-      <Tab.Screen name="Home" component={Test}></Tab.Screen>
-      <Tab.Screen name="X" component={Test}></Tab.Screen>
-      <Tab.Screen name="Y" component={Test}></Tab.Screen>
-      <Tab.Screen name="Z" component={Test}></Tab.Screen>
+      <Tab.Screen
+        name="Stopwatch"
+        component={Test}
+        options={{
+          tabBarIcon: ({ focused }) => (
+            <View>
+              <TouchableRipple>
+                <Image
+                  source={focused ? stopwatch_fill : stopwatch}
+                  resizeMode="contain"
+                  style={{
+                    width: 20,
+                    height: 20,
+                    tintColor: focused ? "#4f3a7b" : "#8a78a9",
+                    alignSelf: "center",
+                  }}
+                ></Image>
+              </TouchableRipple>
+              <Text
+                style={{
+                  color: focused ? "#4f3a7b" : "#8a78a9",
+                  fontWeight: "600",
+                }}
+              >
+                Stopwatch
+              </Text>
+            </View>
+          ),
+        }}
+      ></Tab.Screen>
+
+      <Tab.Screen
+        name="Saved"
+        component={Test}
+        options={{
+          tabBarIcon: ({ focused }) => (
+            <View>
+              <Image
+                source={focused ? bookmark_fill : bookmark}
+                resizeMode="contain"
+                style={{
+                  width: 20,
+                  height: 20,
+                  tintColor: focused ? "#4f3a7b" : "#8a78a9",
+                  alignSelf: "center",
+                }}
+              ></Image>
+              <Text
+                style={{
+                  color: focused ? "#4f3a7b" : "#8a78a9",
+                  fontWeight: "600",
+                }}
+              >
+                Saved
+              </Text>
+            </View>
+          ),
+        }}
+      ></Tab.Screen>
+
+      <Tab.Screen
+        name="Settings"
+        component={Test}
+        options={{
+          tabBarIcon: ({ focused }) => (
+            <View>
+              <Image
+                source={focused ? settings_fill : settings}
+                resizeMode="contain"
+                style={{
+                  width: 20,
+                  height: 20,
+                  tintColor: focused ? "#4f3a7b" : "#8a78a9",
+                  alignSelf: "center",
+                }}
+              ></Image>
+              <Text
+                style={{
+                  color: focused ? "#4f3a7b" : "#8a78a9",
+                  fontWeight: "600",
+                }}
+              >
+                Settings
+              </Text>
+            </View>
+          ),
+        }}
+      ></Tab.Screen>
+
+      <Tab.Screen
+        name="Profile"
+        component={Test}
+        options={{
+          tabBarIcon: ({ focused }) => (
+            <View>
+              <Image
+                source={focused ? user_fill : user}
+                resizeMode="contain"
+                style={{
+                  width: 20,
+                  height: 20,
+                  tintColor: focused ? "#4f3a7b" : "#8a78a9",
+                  alignSelf: "center",
+                }}
+              ></Image>
+              <Text
+                style={{
+                  color: focused ? "#4f3a7b" : "#8a78a9",
+                  fontWeight: "600",
+                }}
+              >
+                Profile
+              </Text>
+            </View>
+          ),
+        }}
+      ></Tab.Screen>
     </Tab.Navigator>
   );
 };
