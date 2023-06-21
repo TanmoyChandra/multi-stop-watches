@@ -46,13 +46,8 @@ const NavigationTabs = () => {
         tabBarStyle: [
           {
             position: "absolute",
-            bottom: 10,
-            left: 10,
-            right: 10,
-            elevation: 0,
             backgroundColor: "#F9EAFF",
-            borderRadius: 25,
-            height: 60,
+            height: 65,
             ...styles.shadow,
           },
         ],
