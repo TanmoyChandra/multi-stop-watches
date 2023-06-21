@@ -1,6 +1,10 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
+
 import Test from "../components/test";
+import Saved from "../components/pages/saved/saved";
+import Settings from "../components/pages/setings/settings";
+import Profile from "../components/pages/profile/profile";
 
 import { TouchableRipple } from "react-native-paper";
 
@@ -87,7 +91,7 @@ const NavigationTabs = () => {
 
       <Tab.Screen
         name="Saved"
-        component={Test}
+        component={Saved}
         options={{
           tabBarIcon: ({ focused }) => (
             <View>
@@ -116,7 +120,7 @@ const NavigationTabs = () => {
 
       <Tab.Screen
         name="Settings"
-        component={Test}
+        component={Settings}
         options={{
           tabBarIcon: ({ focused }) => (
             <View>
@@ -145,7 +149,7 @@ const NavigationTabs = () => {
 
       <Tab.Screen
         name="Profile"
-        component={Test}
+        component={Profile}
         options={{
           tabBarIcon: ({ focused }) => (
             <View>
