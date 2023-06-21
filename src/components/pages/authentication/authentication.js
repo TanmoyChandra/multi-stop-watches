@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { View, Text, TextInput, Button, StyleSheet } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { NavigationContainer } from "@react-navigation/native";
+import NavigationTabs from "../../../navigation/tabs";
 import {
   getAuth,
   createUserWithEmailAndPassword,
@@ -13,6 +15,7 @@ const Authentication = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isRegistering, setIsRegistering] = useState(true);
+  const [loggedIn, setLoggedIn] = useState(false); // State to track if the user is logged in
 
   // Function to register a new user
   const registerUser = async () => {
@@ -40,6 +43,9 @@ const Authentication = () => {
 
       // Save user login information to AsyncStorage
       saveUserLoginInfo(user);
+
+      // Set loggedIn state to true
+      setLoggedIn(true);
     } catch (error) {
       // Handle login error
       console.error("Error logging in user:", error);
@@ -60,6 +66,15 @@ const Authentication = () => {
       console.error("Error saving user login information:", error);
     }
   };
+
+  // Render different component after login
+  if (loggedIn) {
+    return (
+      <NavigationContainer>
+          <NavigationTabs />
+        </NavigationContainer>
+    );
+  }
 
   return (
     <View style={styles.container}>
