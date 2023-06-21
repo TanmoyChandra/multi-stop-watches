@@ -1,6 +1,11 @@
 import React, { useState } from "react";
 import { View, Text, TextInput, Button, StyleSheet } from "react-native";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
 
 const auth = getAuth();
 
@@ -16,6 +21,9 @@ const Authentication = () => {
       const user = userCredential.user;
       // Handle successful registration
       console.log("User registered successfully:", user);
+
+      // Save user login information to AsyncStorage
+      saveUserLoginInfo(user);
     } catch (error) {
       // Handle registration error
       console.error("Error registering user:", error);
@@ -29,9 +37,27 @@ const Authentication = () => {
       const user = userCredential.user;
       // Handle successful login
       console.log("User logged in successfully:", user);
+
+      // Save user login information to AsyncStorage
+      saveUserLoginInfo(user);
     } catch (error) {
       // Handle login error
       console.error("Error logging in user:", error);
+    }
+  };
+
+  // Function to save user login information to AsyncStorage
+  const saveUserLoginInfo = async (user) => {
+    try {
+      const userInfo = {
+        uid: user.uid,
+        email: user.email,
+      };
+
+      await AsyncStorage.setItem("userLoginInfo", JSON.stringify(userInfo));
+      console.log("User login information saved successfully.");
+    } catch (error) {
+      console.error("Error saving user login information:", error);
     }
   };
 
