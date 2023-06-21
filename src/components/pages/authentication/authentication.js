@@ -8,56 +8,80 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
 } from "firebase/auth";
+import { getFirestore, collection, addDoc } from "firebase/firestore";
 
 const auth = getAuth();
+const db = getFirestore();
 
 const Authentication = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [isRegistering, setIsRegistering] = useState(true);
-  const [loggedIn, setLoggedIn] = useState(false); // State to track if the user is logged in
+  const [loggedIn, setLoggedIn] = useState(false);
 
-  // Function to register a new user
   const registerUser = async () => {
     try {
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
       const user = userCredential.user;
-      // Handle successful registration
       console.log("User registered successfully:", user);
+
+      // Save user login information to Firebase Firestore
+      saveUserToFirestore(user);
 
       // Save user login information to AsyncStorage
       saveUserLoginInfo(user);
     } catch (error) {
-      // Handle registration error
       console.error("Error registering user:", error);
     }
   };
 
-  // Function to log in an existing user
   const loginUser = async () => {
     try {
-      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
       const user = userCredential.user;
-      // Handle successful login
       console.log("User logged in successfully:", user);
 
       // Save user login information to AsyncStorage
       saveUserLoginInfo(user);
 
-      // Set loggedIn state to true
       setLoggedIn(true);
     } catch (error) {
-      // Handle login error
       console.error("Error logging in user:", error);
     }
   };
 
-  // Function to save user login information to AsyncStorage
+  const saveUserToFirestore = async (user) => {
+    try {
+      await addDoc(collection(db, "users"), {
+        uid: user.uid,
+        email: user.email,
+        firstName: firstName,
+        lastName: lastName,
+      });
+
+      console.log("User information saved to Firebase Firestore successfully.");
+    } catch (error) {
+      console.error("Error saving user information to Firebase Firestore:", error);
+    }
+  };
+
   const saveUserLoginInfo = async (user) => {
     try {
       const userInfo = {
         uid: user.uid,
         email: user.email,
+        firstName: firstName,
+        lastName: lastName,
       };
 
       await AsyncStorage.setItem("userLoginInfo", JSON.stringify(userInfo));
@@ -67,18 +91,35 @@ const Authentication = () => {
     }
   };
 
-  // Render different component after login
   if (loggedIn) {
     return (
       <NavigationContainer>
-          <NavigationTabs />
-        </NavigationContainer>
+        <NavigationTabs />
+      </NavigationContainer>
     );
   }
 
   return (
     <View style={styles.container}>
       <Text style={styles.heading}>{isRegistering ? "Register" : "Login"}</Text>
+      {isRegistering && (
+        <>
+          <TextInput
+            style={styles.input}
+            placeholder="First Name"
+            value={firstName}
+            onChangeText={setFirstName}
+            autoCapitalize="none"
+          />
+          <TextInput
+            style={styles.input}
+            placeholder="Last Name"
+            value={lastName}
+            onChangeText={setLastName}
+            autoCapitalize="none"
+          />
+        </>
+      )}
       <TextInput
         style={styles.input}
         placeholder="Email"

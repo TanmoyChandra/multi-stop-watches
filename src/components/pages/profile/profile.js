@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, Image, Text, TouchableOpacity, StyleSheet } from "react-native";
-import { initializeApp } from "firebase/app";
+import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
 
@@ -32,7 +31,7 @@ const Profile = () => {
       // Clear user details from AsyncStorage
       await AsyncStorage.removeItem("userLoginInfo");
       // You can add additional logout logic here if needed
-    //   navigation.navigate("Authentication"); // Navigate back to the authentication screen
+      // navigation.navigate("Authentication"); // Navigate back to the authentication screen
     } catch (error) {
       console.error("Error logging out:", error);
     }
@@ -43,7 +42,7 @@ const Profile = () => {
       <View style={styles.background}>
         {userDetails && (
           <>
-            <Text style={styles.label}>Name: {userDetails.name}</Text>
+            <Text style={styles.label}>Name: {userDetails.firstName} {userDetails.lastName}</Text>
             <Text style={styles.label}>Email: {userDetails.email}</Text>
           </>
         )}
