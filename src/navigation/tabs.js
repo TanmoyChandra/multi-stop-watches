@@ -24,7 +24,6 @@ const theme = themes.default; // Change this to select a different theme
 const Tab = createBottomTabNavigator();
 
 const NavigationTabs = () => {
-
   return (
     <Tab.Navigator
       screenOptions={{
@@ -39,21 +38,21 @@ const NavigationTabs = () => {
             textAlign: "left",
           },
         ],
-        headerTitleContainerStyle:[ { paddingVertical: 0 } ],
+        headerTitleContainerStyle: [{ paddingVertical: 0 }],
         headerStyle: [
           {
             backgroundColor: theme.primaryColor,
             borderRadius: 25,
             height: 120,
           },
-          
         ],
         tabBarStyle: [
           {
             position: "absolute",
             backgroundColor: theme.secondaryBackgroundColor,
             height: 80,
-            borderRadius: 25,
+            borderTopLeftRadius: 25,
+            borderTopRightRadius: 25,
           },
         ],
       }}
@@ -64,22 +63,33 @@ const NavigationTabs = () => {
         options={{
           tabBarIcon: ({ focused }) => (
             <View>
-              <TouchableRipple>
+              <View
+                style={{
+                  backgroundColor: focused
+                    ? theme.buttonLight
+                    : theme.secondaryBackgroundColor,
+                  ...styles.navButtonCircle,
+                }}
+              >
                 <Image
                   source={focused ? stopwatch_fill : stopwatch}
                   resizeMode="contain"
                   style={{
                     width: 20,
                     height: 20,
-                    tintColor: focused ? theme.activeButtonColor : theme.deactiveButtonColor,
+                    tintColor: focused
+                      ? theme.activeButtonColor
+                      : theme.deactiveButtonColor,
                     alignSelf: "center",
                   }}
                 ></Image>
-              </TouchableRipple>
+              </View>
               <Text
                 style={{
-                  color: focused ? theme.activeButtonColor : theme.deactiveButtonColor,
-                  fontWeight: "600",
+                  color: focused
+                    ? theme.activeButtonColor
+                    : theme.deactiveButtonColor,
+                  ...styles.navButtonText,
                 }}
               >
                 Stopwatch
@@ -95,20 +105,33 @@ const NavigationTabs = () => {
         options={{
           tabBarIcon: ({ focused }) => (
             <View>
-              <Image
-                source={focused ? bookmark_fill : bookmark}
-                resizeMode="contain"
+              <View
                 style={{
-                  width: 20,
-                  height: 20,
-                  tintColor: focused ? theme.activeButtonColor : theme.deactiveButtonColor,
-                  alignSelf: "center",
+                  backgroundColor: focused
+                    ? theme.buttonLight
+                    : theme.secondaryBackgroundColor,
+                  ...styles.navButtonCircle,
                 }}
-              ></Image>
+              >
+                <Image
+                  source={focused ? bookmark_fill : bookmark}
+                  resizeMode="contain"
+                  style={{
+                    width: 20,
+                    height: 20,
+                    tintColor: focused
+                      ? theme.activeButtonColor
+                      : theme.deactiveButtonColor,
+                    alignSelf: "center",
+                  }}
+                ></Image>
+              </View>
               <Text
                 style={{
-                  color: focused ? theme.activeButtonColor : theme.deactiveButtonColor,
-                  fontWeight: "600",
+                  color: focused
+                    ? theme.activeButtonColor
+                    : theme.deactiveButtonColor,
+                  ...styles.navButtonText,
                 }}
               >
                 Saved
@@ -124,20 +147,33 @@ const NavigationTabs = () => {
         options={{
           tabBarIcon: ({ focused }) => (
             <View>
-              <Image
-                source={focused ? settings_fill : settings}
-                resizeMode="contain"
+              <View
                 style={{
-                  width: 20,
-                  height: 20,
-                  tintColor: focused ? theme.activeButtonColor : theme.deactiveButtonColor,
-                  alignSelf: "center",
+                  backgroundColor: focused
+                    ? theme.buttonLight
+                    : theme.secondaryBackgroundColor,
+                  ...styles.navButtonCircle,
                 }}
-              ></Image>
+              >
+                <Image
+                  source={focused ? settings_fill : settings}
+                  resizeMode="contain"
+                  style={{
+                    width: 20,
+                    height: 20,
+                    tintColor: focused
+                      ? theme.activeButtonColor
+                      : theme.deactiveButtonColor,
+                    alignSelf: "center",
+                  }}
+                ></Image>
+              </View>
               <Text
                 style={{
-                  color: focused ? theme.activeButtonColor : theme.deactiveButtonColor,
-                  fontWeight: "600",
+                  color: focused
+                    ? theme.activeButtonColor
+                    : theme.deactiveButtonColor,
+                  ...styles.navButtonText,
                 }}
               >
                 Settings
@@ -153,20 +189,33 @@ const NavigationTabs = () => {
         options={{
           tabBarIcon: ({ focused }) => (
             <View>
-              <Image
-                source={focused ? user_fill : user}
-                resizeMode="contain"
+              <View
                 style={{
-                  width: 20,
-                  height: 20,
-                  tintColor: focused ? theme.activeButtonColor : theme.deactiveButtonColor,
-                  alignSelf: "center",
+                  backgroundColor: focused
+                    ? theme.buttonLight
+                    : theme.secondaryBackgroundColor,
+                  ...styles.navButtonCircle,
                 }}
-              ></Image>
+              >
+                <Image
+                  source={focused ? user_fill : user}
+                  resizeMode="contain"
+                  style={{
+                    width: 20,
+                    height: 20,
+                    tintColor: focused
+                      ? theme.activeButtonColor
+                      : theme.deactiveButtonColor,
+                    alignSelf: "center",
+                  }}
+                ></Image>
+              </View>
               <Text
                 style={{
-                  color: focused ? theme.activeButtonColor : theme.deactiveButtonColor,
-                  fontWeight: "600",
+                  color: focused
+                    ? theme.activeButtonColor
+                    : theme.deactiveButtonColor,
+                  ...styles.navButtonText,
                 }}
               >
                 Profile
@@ -178,5 +227,19 @@ const NavigationTabs = () => {
     </Tab.Navigator>
   );
 };
+
+const styles = StyleSheet.create({
+  navButtonCircle: {
+    height: 30,
+    weight: 30,
+    borderRadius: 15,
+    paddingTop: 5,
+  },
+  navButtonText: {
+    width: 65,
+    textAlign: "center",
+    fontWeight: "600",
+  },
+});
 
 export default NavigationTabs;
