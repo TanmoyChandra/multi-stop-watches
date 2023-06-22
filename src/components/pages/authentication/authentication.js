@@ -42,6 +42,7 @@ const Authentication = () => {
   };
 
   const loginUser = async () => {
+    console.log("LOGIN called")
     try {
       const userCredential = await signInWithEmailAndPassword(
         auth,

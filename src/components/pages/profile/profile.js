@@ -3,6 +3,9 @@ import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
 
+import { themes } from "../../../themes/themes";
+const theme = themes.default; // Change this to select a different theme
+
 const Profile = () => {
   const navigation = useNavigation();
   const [userDetails, setUserDetails] = useState(null);
@@ -57,7 +60,7 @@ const Profile = () => {
 const styles = StyleSheet.create({
   container: {
     paddingTop: 50,
-    backgroundColor: "#1D0F4A",
+    backgroundColor: theme.primaryBackgroundColor,
     height: "100%",
     width: "100%",
   },
@@ -68,7 +71,7 @@ const styles = StyleSheet.create({
   },
   label: {
     fontSize: 18,
-    color: "#FFFFFF",
+    color: "#000",
     marginBottom: 10,
   },
   logoutButton: {

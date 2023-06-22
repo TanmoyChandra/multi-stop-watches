@@ -14,6 +14,8 @@ import {
 } from "firebase/firestore/lite";
 import uuid from "react-native-uuid";
 
+import { themes } from "../themes/themes";
+
 const firebaseConfig = {
   apiKey: "AIzaSyDRrUVRi5m-fuBk45zt8LYQSiMjWP4-Cx8",
   authDomain: "multi-stop-watches.firebaseapp.com",
@@ -26,8 +28,14 @@ const firebaseConfig = {
 
 initializeApp(firebaseConfig);
 
+
+const theme = themes.default; // Change this to select a different theme
+
+
 const Test = () => {
   const [stopwatches, setStopwatches] = useState([]);
+
+  
 
   // Fetch stopwatches from Firebase when the component mounts
   useEffect(() => {
@@ -140,7 +148,6 @@ const Test = () => {
   };
 
   return (
-    <View style={styles.container}>
       <View style={styles.background}>
         {/* All the stopwatches will be here */}
         {stopwatches.map((stopwatch) => (
@@ -166,7 +173,6 @@ const Test = () => {
           {/* <Icon name="plus" size={24} color="#FFFFFF" /> */}
         </TouchableOpacity>
       </View>
-    </View>
   );
 };
 
@@ -191,7 +197,7 @@ const styles = StyleSheet.create({
   },
   background: {
     height: "90%",
-    backgroundColor: "#1D0F4A",
+    backgroundColor: theme.primaryBackgroundColor,
     flex: 1,
     alignItems: "center",
     position: "relative",

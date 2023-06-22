@@ -18,9 +18,15 @@ import settings_fill from "../../assets/navigation_icons/settings_fill.png";
 import stopwatch_fill from "../../assets/navigation_icons/stopwatch_fill.png";
 import bookmark_fill from "../../assets/navigation_icons/bookmark_fill.png";
 
+import { themes } from "../themes/themes";
+
 const Tab = createBottomTabNavigator();
 
 const NavigationTabs = () => {
+
+  const theme = themes.default; // Change this to select a different theme
+
+
   return (
     <Tab.Navigator
       screenOptions={{
@@ -30,23 +36,23 @@ const NavigationTabs = () => {
         headerTitleStyle: [
           {
             fontSize: 35,
-            color: "#F9EAFF",
+            color: theme.textColor_blue,
             fontWeight: "bold",
             textAlign: "left",
-            textShadowColor: "#4F3A7B",
-            textShadowOffset: { width: 1, height: 1 },
-            textShadowRadius: 2,
+            // textShadowColor: "#4F3A7B",
+            // textShadowOffset: { width: 1, height: 1 },
+            // textShadowRadius: 2,
           },
         ],
         headerStyle: [
           {
-            backgroundColor: "#1D0F4A",
+            backgroundColor: theme.primaryColor,
           },
         ],
         tabBarStyle: [
           {
             position: "absolute",
-            backgroundColor: "#F9EAFF",
+            backgroundColor: theme.secondaryBackgroundColor,
             height: 65,
             ...styles.shadow,
           },
@@ -66,14 +72,14 @@ const NavigationTabs = () => {
                   style={{
                     width: 20,
                     height: 20,
-                    tintColor: focused ? "#4f3a7b" : "#8a78a9",
+                    tintColor: focused ? theme.activeButtonColor : theme.deactiveButtonColor,
                     alignSelf: "center",
                   }}
                 ></Image>
               </TouchableRipple>
               <Text
                 style={{
-                  color: focused ? "#4f3a7b" : "#8a78a9",
+                  color: focused ? theme.activeButtonColor : theme.deactiveButtonColor,
                   fontWeight: "600",
                 }}
               >
@@ -96,13 +102,13 @@ const NavigationTabs = () => {
                 style={{
                   width: 20,
                   height: 20,
-                  tintColor: focused ? "#4f3a7b" : "#8a78a9",
+                  tintColor: focused ? theme.activeButtonColor : theme.deactiveButtonColor,
                   alignSelf: "center",
                 }}
               ></Image>
               <Text
                 style={{
-                  color: focused ? "#4f3a7b" : "#8a78a9",
+                  color: focused ? theme.activeButtonColor : theme.deactiveButtonColor,
                   fontWeight: "600",
                 }}
               >
@@ -125,13 +131,13 @@ const NavigationTabs = () => {
                 style={{
                   width: 20,
                   height: 20,
-                  tintColor: focused ? "#4f3a7b" : "#8a78a9",
+                  tintColor: focused ? theme.activeButtonColor : theme.deactiveButtonColor,
                   alignSelf: "center",
                 }}
               ></Image>
               <Text
                 style={{
-                  color: focused ? "#4f3a7b" : "#8a78a9",
+                  color: focused ? theme.activeButtonColor : theme.deactiveButtonColor,
                   fontWeight: "600",
                 }}
               >
@@ -154,13 +160,13 @@ const NavigationTabs = () => {
                 style={{
                   width: 20,
                   height: 20,
-                  tintColor: focused ? "#4f3a7b" : "#8a78a9",
+                  tintColor: focused ? theme.activeButtonColor : theme.deactiveButtonColor,
                   alignSelf: "center",
                 }}
               ></Image>
               <Text
                 style={{
-                  color: focused ? "#4f3a7b" : "#8a78a9",
+                  color: focused ? theme.activeButtonColor : theme.deactiveButtonColor,
                   fontWeight: "600",
                 }}
               >

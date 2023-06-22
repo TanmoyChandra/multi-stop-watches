@@ -2,6 +2,9 @@ import React, { useEffect, useState } from "react";
 import { View, Image, Text, TouchableOpacity, StyleSheet } from "react-native";
 import { initializeApp } from "firebase/app";
 
+import { themes } from "../../../themes/themes";
+const theme = themes.default; // Change this to select a different theme
+
 const Profile = () => {
   useEffect(() => {}, []);
 
@@ -17,7 +20,7 @@ const Profile = () => {
 const styles = StyleSheet.create({
   container: {
     paddingTop: 50,
-    backgroundColor: "#1D0F4A",
+    backgroundColor: theme.primaryBackgroundColor,
     height: "100%",
     width: "100%",
   },
