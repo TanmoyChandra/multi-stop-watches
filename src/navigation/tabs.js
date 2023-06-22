@@ -42,10 +42,14 @@ const NavigationTabs = () => {
             // textShadowRadius: 2,
           },
         ],
+        headerTitleContainerStyle:[ { paddingVertical: 0 } ],
         headerStyle: [
           {
             backgroundColor: theme.primaryColor,
+            borderRadius: 25,
+            height: 100,
           },
+          
         ],
         tabBarStyle: [
           {
