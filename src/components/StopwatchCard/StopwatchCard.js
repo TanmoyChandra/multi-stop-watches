@@ -14,6 +14,9 @@ import ClockIcon from "../../../assets/clock_icon.png";
 import EditIcon from "../../../assets/edit_icon.png";
 import DeleteIcon from "../../../assets/delete_icon.png";
 
+import { themes } from "../../themes/themes";
+const theme = themes.default; // Change this to select a different theme
+
 const { width } = Dimensions.get("window");
 const cardWidth = width * 0.9;
 
@@ -30,9 +33,6 @@ const StopwatchView = ({ id, name, time, onDelete, onRename }) => {
 
   return (
     <View style={styles.card}>
-      <View style={styles.columnContainer_1}>
-        <Image source={ClockIcon} style={styles.ClockIcon} />
-      </View>
       <View style={styles.columnContainer_2}>
         <View style={styles.rowContainer}>
           <Text style={styles.name}>{name}</Text>
@@ -86,26 +86,24 @@ const StopwatchView = ({ id, name, time, onDelete, onRename }) => {
 
 const styles = StyleSheet.create({
   card: {
-    backgroundColor: "#4F3A7B",
-    borderRadius: 15,
-    borderWidth: 2,
-    borderColor: "rgba(255, 255, 255, 0.23)",
+    backgroundColor: theme.secondaryBackgroundColor,
+    borderRadius: 25,
     padding: 16,
-    marginBottom: 16,
-    height: 84,
+    
+    marginTop: 20,
+
+    height: 95,
     width: cardWidth,
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
+
   },
   ClockIcon: {
     width: 45,
     height: 45,
     marginLeft: -2,
     resizeMode: "contain",
-  },
-  columnContainer_1: {
-    flex: 2,
   },
   columnContainer_2: {
     flex: 5,
@@ -127,21 +125,14 @@ const styles = StyleSheet.create({
   },
   name: {
     fontSize: 18,
-    color: "#F9EAFF",
+    color: theme.textColor_light,
     fontWeight: "bold",
     marginRight: 16,
-    textShadowColor: "#1D0F4A",
-    textShadowOffset: { width: 0, height: 0 },
-    textShadowRadius: 10,
   },
   elapsedTime: {
     fontSize: 28,
-    color: "#00C9A4",
+    color: theme.textColor_dark,
     fontWeight: "bold",
-
-    // textShadowColor: '#1D0F4A',
-    // textShadowOffset: { width: 0, height: 0 },
-    // textShadowRadius: 15,
   },
   deleteButton: {
     marginLeft: "auto",

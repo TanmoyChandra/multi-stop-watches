@@ -170,7 +170,6 @@ const Test = () => {
           activeOpacity={0.8}
         >
           <Image source={addIcon} style={styles.ClockIcon} />
-          {/* <Icon name="plus" size={24} color="#FFFFFF" /> */}
         </TouchableOpacity>
       </View>
   );
@@ -204,25 +203,25 @@ const styles = StyleSheet.create({
   },
 
   ClockIcon: {
-    height: 65,
-    width: 65,
+    height: 27,
+    width: 27,
   },
   addButton: {
     position: "absolute",
-    bottom: 40,
-    right: 40,
-    backgroundColor: "#F9EAFF",
-    borderRadius: 50,
-    width: 10,
-    height: 10,
+    bottom: 100,
+    right: 20,
+    backgroundColor: theme.buttonColorPrimary,
+    borderRadius: 18,
+    width: 60,
+    height: 60,
     justifyContent: "center",
     alignItems: "center",
-    shadowColor: "#000",
+    shadowColor: "#8CA0E8",
     shadowOffset: {
-      width: 0,
+      width: 2,
       height: 2,
     },
-    shadowOpacity: 0.25,
+    shadowOpacity: 1,
     shadowRadius: 3.84,
     elevation: 5,
   },

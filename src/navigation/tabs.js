@@ -19,13 +19,11 @@ import stopwatch_fill from "../../assets/navigation_icons/stopwatch_fill.png";
 import bookmark_fill from "../../assets/navigation_icons/bookmark_fill.png";
 
 import { themes } from "../themes/themes";
+const theme = themes.default; // Change this to select a different theme
 
 const Tab = createBottomTabNavigator();
 
 const NavigationTabs = () => {
-
-  const theme = themes.default; // Change this to select a different theme
-
 
   return (
     <Tab.Navigator
@@ -53,8 +51,8 @@ const NavigationTabs = () => {
           {
             position: "absolute",
             backgroundColor: theme.secondaryBackgroundColor,
-            height: 65,
-            ...styles.shadow,
+            height: 80,
+            borderRadius: 25,
           },
         ],
       }}
@@ -179,18 +177,5 @@ const NavigationTabs = () => {
     </Tab.Navigator>
   );
 };
-
-const styles = StyleSheet.create({
-  shadow: {
-    shadowColor: "1D0F4A",
-    shadowOffset: {
-      width: 0,
-      height: 10,
-    },
-    shadowOpacity: 0.2,
-    shadowRadius: 3.5,
-    elevation: 5,
-  },
-});
 
 export default NavigationTabs;
