@@ -1,5 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { View, Image, Text, TouchableOpacity, StyleSheet } from "react-native";
+import {
+  View,
+  Image,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  ScrollView,
+} from "react-native";
 import { initializeApp } from "firebase/app";
 import StopwatchView from "./StopwatchCard/StopwatchCard";
 import addIcon from ".././../assets/add.png";
@@ -28,14 +35,10 @@ const firebaseConfig = {
 
 initializeApp(firebaseConfig);
 
-
 const theme = themes.default; // Change this to select a different theme
-
 
 const Test = () => {
   const [stopwatches, setStopwatches] = useState([]);
-
-  
 
   // Fetch stopwatches from Firebase when the component mounts
   useEffect(() => {
@@ -148,8 +151,12 @@ const Test = () => {
   };
 
   return (
-      <View style={styles.background}>
-        {/* All the stopwatches will be here */}
+    <View style={styles.background}>
+      {/* All the stopwatches will be here */}
+      <ScrollView
+        contentContainerStyle={styles.scrollContainer}
+        showsVerticalScrollIndicator={false}
+      >
         {stopwatches.map((stopwatch) => (
           <StopwatchView
             key={stopwatch.id}
@@ -163,25 +170,25 @@ const Test = () => {
             onRename={renameStopwatch}
           />
         ))}
+      </ScrollView>
 
-        <TouchableOpacity
-          style={styles.addButton}
-          onPress={addStopwatch}
-          activeOpacity={0.8}
-        >
-          <Image source={addIcon} style={styles.ClockIcon} />
-        </TouchableOpacity>
-      </View>
+      <TouchableOpacity
+        style={styles.addButton}
+        onPress={addStopwatch}
+        activeOpacity={0.8}
+      >
+        <Image source={addIcon} style={styles.ClockIcon} />
+      </TouchableOpacity>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    paddingTop: 50,
-    backgroundColor: "#1D0F4A",
-    height: "100%",
-    width: "100%",
+
+  scrollContainer: {
+    paddingBottom: 100,
   },
+
   heading: {
     color: "#F9EAFF",
     fontSize: 40,
@@ -203,26 +210,26 @@ const styles = StyleSheet.create({
   },
 
   ClockIcon: {
-    height: 27,
-    width: 27,
+    height: 23,
+    width: 23,
   },
   addButton: {
     position: "absolute",
     bottom: 100,
     right: 20,
     backgroundColor: theme.buttonColorPrimary,
-    borderRadius: 18,
+    borderRadius: 20,
     width: 60,
     height: 60,
     justifyContent: "center",
     alignItems: "center",
-    shadowColor: "#8CA0E8",
+    shadowColor: "#6587FF",
     shadowOffset: {
-      width: 2,
+      width: 5,
       height: 2,
     },
     shadowOpacity: 1,
-    shadowRadius: 3.84,
+    shadowRadius: 5,
     elevation: 5,
   },
 });
