@@ -37,9 +37,6 @@ const NavigationTabs = () => {
             color: theme.textColor_blue,
             fontWeight: "bold",
             textAlign: "left",
-            // textShadowColor: "#4F3A7B",
-            // textShadowOffset: { width: 1, height: 1 },
-            // textShadowRadius: 2,
           },
         ],
         headerTitleContainerStyle:[ { paddingVertical: 0 } ],
@@ -47,7 +44,7 @@ const NavigationTabs = () => {
           {
             backgroundColor: theme.primaryColor,
             borderRadius: 25,
-            height: 100,
+            height: 120,
           },
           
         ],

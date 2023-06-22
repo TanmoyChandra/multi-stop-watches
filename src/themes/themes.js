@@ -11,6 +11,7 @@ export const themes = {
 
       buttonLight: "#E1E8FF",
       dangerLight: "#F8F0F9",
+      
 
       activeButtonColor: "#6587FF",
       deactiveButtonColor:"#78789A",

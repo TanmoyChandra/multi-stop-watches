@@ -44,12 +44,24 @@ const StopwatchView = ({ id, name, time, onDelete, onRename }) => {
 
       <View style={styles.columnContainer_3}>
         <TouchableOpacity onPress={() => setModalVisible(true)}>
+          <View style={styles.addButton}>
           <Image source={EditIcon} style={styles.ClockIcon} />
+          </View>
         </TouchableOpacity>
       </View>
       <View style={styles.columnContainer_4}>
         <TouchableOpacity onPress={onDelete}>
+        <View style={styles.addButton}>
           <Image source={DeleteIcon} style={styles.ClockIcon} />
+          </View>
+        </TouchableOpacity>
+      </View>
+
+      <View style={styles.columnContainer_4}>
+        <TouchableOpacity onPress={onDelete}>
+        <View style={styles.addButton}>
+          <Image source={DeleteIcon} style={styles.ClockIcon} />
+          </View>
         </TouchableOpacity>
       </View>
 
@@ -89,7 +101,7 @@ const styles = StyleSheet.create({
     backgroundColor: theme.secondaryBackgroundColor,
     borderRadius: 25,
     padding: 16,
-    
+
     marginTop: 20,
 
     height: 95,
@@ -97,11 +109,35 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-
   },
+
+
+
+  addButton: {
+    backgroundColor: theme.buttonLight,
+    borderRadius: 10,
+    width: 40,
+    height: 40,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+
+  deleteButton: {
+    backgroundColor: theme.dangerLight,
+    borderRadius: 10,
+    width: 40,
+    height: 40,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+
+
+
+
+
   ClockIcon: {
-    width: 45,
-    height: 45,
+    width: 25,
+    height: 25,
     marginLeft: -2,
     resizeMode: "contain",
   },
