@@ -1,5 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, TextInput, Button, StyleSheet } from "react-native";
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  StyleSheet,
+} from "react-native";
 import { themes } from "../../../themes/themes";
 import { useFonts } from "expo-font";
 import * as Font from "expo-font";
@@ -98,12 +104,26 @@ const LoginRegistration = ({
             <Text style={styles.errorText}>{errorMessage}</Text>
           )}
         </View>
-        <Button
-          title={isRegistering ? "Register" : "Login"}
+        <TouchableOpacity
+          style={styles.customButton}
           onPress={handleButtonPress}
-        />
+        >
+          <Text style={styles.customButtonText}>
+            {isRegistering ? "Register" : "Login"}
+          </Text>
+        </TouchableOpacity>
         <Text style={styles.toggleText} onPress={onTogglePress}>
-          {toggleText}
+          {toggleText ? (
+            <Text style={styles.toggleTextSpan1}>
+              Already have an account?{" "}
+              <Text style={styles.toggleTextSpan2}>Login</Text>
+            </Text>
+          ) : (
+            <Text style={styles.toggleTextSpan1}>
+              Don't have an account?{" "}
+              <Text style={styles.toggleTextSpan2}>Register</Text>
+            </Text>
+          )}
         </Text>
       </View>
     </>
@@ -123,6 +143,15 @@ const styles = StyleSheet.create({
     backgroundColor: theme.accentColor,
     borderBottomEndRadius: 25,
     borderBottomStartRadius: 25,
+
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 3,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
   },
   appName: {
     marginTop: "30%",
@@ -137,15 +166,18 @@ const styles = StyleSheet.create({
     fontFamily: "MuseoModerno-Bold",
     alignSelf: "center",
   },
-
   inputBoxArea: {
     marginTop: "15%",
-    width: "80%",
+    width: "83%",
   },
   toggleText: {
-    marginTop: 20,
-    color: "blue",
-    textDecorationLine: "underline",
+    marginTop: 30,
+  },
+  toggleTextSpan1: {
+    color: "grey",
+  },
+  toggleTextSpan2: {
+    color: theme.accentColor,
   },
   inputContainer: {
     flexDirection: "row",
@@ -159,10 +191,10 @@ const styles = StyleSheet.create({
     marginRight: 2.5,
     marginLeft: 2.5,
     flex: 1,
-    height: 40,
+    height: 45,
     borderColor: theme.buttonLight,
     borderWidth: 1,
-    borderRadius: 13,
+    borderRadius: 15,
     paddingHorizontal: 10,
     backgroundColor: "#fff",
   },
@@ -170,16 +202,30 @@ const styles = StyleSheet.create({
     marginRight: 2.5,
     marginLeft: 2.5,
     marginBottom: 10,
-    height: 40,
+    height: 45,
     borderColor: theme.buttonLight,
     borderWidth: 1,
-    borderRadius: 13,
+    borderRadius: 15,
     paddingHorizontal: 10,
     backgroundColor: "#fff",
   },
   errorText: {
     color: "red",
     marginBottom: 10,
+  },
+  customButton: {
+    backgroundColor: theme.accentColor,
+    borderRadius: 15,
+    width: "80%",
+    height: 45,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 10,
+  },
+  customButtonText: {
+    color: "white",
+    fontSize: 16,
+    fontWeight: "bold",
   },
 });
 

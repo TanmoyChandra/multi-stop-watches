@@ -145,11 +145,7 @@ const Authentication = () => {
             password={password}
             setPassword={setPassword}
             onButtonPress={isRegistering ? registerUser : loginUser}
-            toggleText={
-              isRegistering
-                ? "Already have an account? Login"
-                : "Don't have an account? Register"
-            }
+            toggleText={isRegistering ? true : false}
             onTogglePress={() => setIsRegistering((prevValue) => !prevValue)}
           />
         </View>
