@@ -9,6 +9,8 @@ import {
 import { themes } from "../../../themes/themes";
 import { useFonts } from "expo-font";
 import * as Font from "expo-font";
+import { Feather } from "@expo/vector-icons";
+
 const theme = themes.default; // Change this to select a different theme
 
 const LoginRegistration = ({
@@ -27,6 +29,7 @@ const LoginRegistration = ({
 }) => {
   const [fontsLoaded, setFontsLoaded] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
   useEffect(() => {
     const loadFonts = async () => {
@@ -49,6 +52,10 @@ const LoginRegistration = ({
       setErrorMessage("");
       onButtonPress();
     }
+  };
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
   };
 
   if (!fontsLoaded) {
@@ -92,13 +99,26 @@ const LoginRegistration = ({
               onChangeText={setEmail}
               autoCapitalize="none"
             />
-            <TextInput
-              style={styles.inputFull}
-              placeholder="Password"
-              value={password}
-              onChangeText={setPassword}
-              secureTextEntry
-            />
+            <View style={styles.passwordInput}>
+              <TextInput
+                style={styles.passwordInputText}
+                placeholder="Password"
+                value={password}
+                onChangeText={setPassword}
+                secureTextEntry={!showPassword}
+              />
+              <TouchableOpacity
+                style={styles.eyeIconContainer}
+                onPress={togglePasswordVisibility}
+              >
+                <Feather
+                  name={showPassword ? "eye-off" : "eye"}
+                  size={24}
+                  color="gray"
+                  style={styles.eyeIcon}
+                />
+              </TouchableOpacity>
+            </View>
           </View>
           {errorMessage !== "" && (
             <View style={styles.errorBox}>
@@ -211,6 +231,26 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     backgroundColor: "#fff",
   },
+  passwordInput: {
+    flexDirection: "row",
+    alignItems: "center",
+    borderColor: theme.buttonLight,
+    borderWidth: 1,
+    borderRadius: 15,
+    paddingHorizontal: 10,
+    backgroundColor: "#fff",
+  },
+  passwordInputText: {
+    flex: 1,
+    height: 45,
+  },
+  eyeIconContainer: {
+    padding: 10,
+  },
+  eyeIcon: {
+    fontSize: 20,
+    color: "#b2b2b2",
+  },
   errorText: {
     color: theme.buttonColorDanger,
     marginBottom: 5,
@@ -219,7 +259,7 @@ const styles = StyleSheet.create({
   customButton: {
     backgroundColor: theme.accentColor,
     borderRadius: 15,
-    width: "80%",
+    width: "81.5%",
     height: 45,
     justifyContent: "center",
     alignItems: "center",
@@ -231,15 +271,15 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
 
-  //   errorBox: {
-  //     width: "95%",
-  //     alignSelf: "center",
-  //     backgroundColor: theme.dangerLight,
-  //     borderRadius: 15,
-  //     paddingTop: 8,
-  //     paddingBottom: 1,
-  //     paddingLeft: 10,
-  //   },
+  errorBox: {
+    width: "95%",
+    alignSelf: "center",
+    backgroundColor: theme.dangerLight,
+    borderRadius: 15,
+    paddingTop: 8,
+    paddingBottom: 1,
+    paddingLeft: 10,
+  },
 });
 
 export default LoginRegistration;
