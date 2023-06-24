@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Image,
@@ -9,7 +9,7 @@ import {
   TextInput,
   Modal,
 } from "react-native";
-import Icon from "react-native-vector-icons/FontAwesome";
+import * as Font from "expo-font";
 import ClockIcon from "../../../assets/clock_icon.png";
 import EditIcon from "../../../assets/edit_icon.png";
 import DeleteIcon from "../../../assets/delete_icon.png";
@@ -23,6 +23,19 @@ const cardWidth = width * 0.9;
 const StopwatchView = ({ id, name, time, onDelete, onRename }) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [newName, setNewName] = useState("");
+  const [fontsLoaded, setFontsLoaded] = useState(false);
+
+  useEffect(() => {
+    const loadFonts = async () => {
+      await Font.loadAsync({
+        "PlusJakartaSans-Regular": require("../../../assets/fonts/plus_jakarta_sans/PlusJakartaSans-Bold.ttf"),
+        "MuseoModerno-Bold": require("../../../assets/fonts/MuseoModerno-Bold.ttf"),
+      });
+      setFontsLoaded(true);
+    };
+
+    loadFonts();
+  }, []);
 
   const handleRename = () => {
     if (newName.trim() !== "") {
@@ -30,7 +43,9 @@ const StopwatchView = ({ id, name, time, onDelete, onRename }) => {
       setModalVisible(false);
     }
   };
-
+  if (!fontsLoaded) {
+    return null; // or a loading spinner
+  }
   return (
     <View style={styles.card}>
       <View style={styles.columnContainer_2}>
@@ -45,22 +60,22 @@ const StopwatchView = ({ id, name, time, onDelete, onRename }) => {
       <View style={styles.columnContainer_3}>
         <TouchableOpacity onPress={() => setModalVisible(true)}>
           <View style={styles.addButton}>
-          <Image source={EditIcon} style={styles.ClockIcon} />
+            <Image source={EditIcon} style={styles.ClockIcon} />
           </View>
         </TouchableOpacity>
       </View>
       <View style={styles.columnContainer_4}>
         <TouchableOpacity onPress={onDelete}>
-        <View style={styles.addButton}>
-          <Image source={DeleteIcon} style={styles.ClockIcon} />
+          <View style={styles.addButton}>
+            <Image source={DeleteIcon} style={styles.ClockIcon} />
           </View>
         </TouchableOpacity>
       </View>
 
       <View style={styles.columnContainer_4}>
         <TouchableOpacity onPress={onDelete}>
-        <View style={styles.addButton}>
-          <Image source={DeleteIcon} style={styles.ClockIcon} />
+          <View style={styles.addButton}>
+            <Image source={DeleteIcon} style={styles.ClockIcon} />
           </View>
         </TouchableOpacity>
       </View>
@@ -111,8 +126,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
 
-
-
   addButton: {
     backgroundColor: theme.buttonLight,
     borderRadius: 10,
@@ -130,10 +143,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-
-
-
-
 
   ClockIcon: {
     width: 25,
@@ -160,15 +169,15 @@ const styles = StyleSheet.create({
     marginBottom: 0,
   },
   name: {
-    fontSize: 18,
+    fontSize: 17,
     color: theme.textColor_light,
-    fontWeight: "bold",
+    fontFamily: "PlusJakartaSans-Regular",
     marginRight: 16,
   },
   elapsedTime: {
     fontSize: 28,
     color: theme.textColor_dark,
-    fontWeight: "bold",
+    fontFamily: "MuseoModerno-Bold",
   },
   deleteButton: {
     marginLeft: "auto",
