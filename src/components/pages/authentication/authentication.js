@@ -42,7 +42,7 @@ const Authentication = () => {
   };
 
   const loginUser = async () => {
-    console.log("LOGIN called")
+    console.log("LOGIN called");
     try {
       const userCredential = await signInWithEmailAndPassword(
         auth,
@@ -72,7 +72,10 @@ const Authentication = () => {
 
       console.log("User information saved to Firebase Firestore successfully.");
     } catch (error) {
-      console.error("Error saving user information to Firebase Firestore:", error);
+      console.error(
+        "Error saving user information to Firebase Firestore:",
+        error
+      );
     }
   };
 
@@ -94,9 +97,9 @@ const Authentication = () => {
 
   if (loggedIn) {
     return (
-      <NavigationContainer>
-        <NavigationTabs />
-      </NavigationContainer>
+      // <NavigationContainer>
+      <NavigationTabs />
+      // </NavigationContainer>
     );
   }
 
@@ -143,7 +146,9 @@ const Authentication = () => {
         style={styles.toggleText}
         onPress={() => setIsRegistering((prevValue) => !prevValue)}
       >
-        {isRegistering ? "Already have an account? Login" : "Don't have an account? Register"}
+        {isRegistering
+          ? "Already have an account? Login"
+          : "Don't have an account? Register"}
       </Text>
     </View>
   );

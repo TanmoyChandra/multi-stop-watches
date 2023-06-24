@@ -5,6 +5,9 @@ import { StatusBar } from "expo-status-bar";
 import NavigationTabs from "./src/navigation/tabs";
 import Authentication from "./src/components/pages/authentication/authentication";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+
+const Tab = createBottomTabNavigator();
 
 export default function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -37,16 +40,24 @@ export default function App() {
   }
 
   return (
-    <>
-      {isLoggedIn ? (
-        <NavigationContainer>
-          <NavigationTabs />
-        </NavigationContainer>
-      ) : (
-        <Authentication />
-      )}
+    <NavigationContainer>
+      <Tab.Navigator
+        screenOptions={{
+          tabBarStyle: { display: "none" }, // Hide the tab bar
+        }}
+      >
+        {isLoggedIn ? (
+          <Tab.Screen name="Home" component={NavigationTabs} />
+        ) : (
+          <Tab.Screen
+            name="Authentication"
+            component={Authentication}
+            options={{ headerShown: false }} // Hide the header
+          />
+        )}
+      </Tab.Navigator>
       <StatusBar style="light" />
-    </>
+    </NavigationContainer>
   );
 }
 

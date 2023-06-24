@@ -33,8 +33,11 @@ const Profile = () => {
     try {
       // Clear user details from AsyncStorage
       await AsyncStorage.removeItem("userLoginInfo");
-      // You can add additional logout logic here if needed
-      // navigation.navigate("Authentication"); // Navigate back to the authentication screen
+      // Reset the navigation stack to authentication page
+      navigation.reset({
+        index: 0,
+        routes: [{ name: "Authentication" }],
+      });
     } catch (error) {
       console.error("Error logging out:", error);
     }
@@ -45,7 +48,9 @@ const Profile = () => {
       <View style={styles.background}>
         {userDetails && (
           <>
-            <Text style={styles.label}>Name: {userDetails.firstName} {userDetails.lastName}</Text>
+            <Text style={styles.label}>
+              Name: {userDetails.firstName} {userDetails.lastName}
+            </Text>
             <Text style={styles.label}>Email: {userDetails.email}</Text>
           </>
         )}
