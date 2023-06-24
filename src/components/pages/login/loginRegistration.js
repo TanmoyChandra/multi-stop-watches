@@ -101,7 +101,9 @@ const LoginRegistration = ({
             />
           </View>
           {errorMessage !== "" && (
-            <Text style={styles.errorText}>{errorMessage}</Text>
+            <View style={styles.errorBox}>
+              <Text style={styles.errorText}>{errorMessage}</Text>
+            </View>
           )}
         </View>
         <TouchableOpacity
@@ -210,8 +212,9 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
   },
   errorText: {
-    color: "red",
-    marginBottom: 10,
+    color: theme.buttonColorDanger,
+    marginBottom: 5,
+    alignSelf: "center",
   },
   customButton: {
     backgroundColor: theme.accentColor,
@@ -227,6 +230,16 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "bold",
   },
+
+  //   errorBox: {
+  //     width: "95%",
+  //     alignSelf: "center",
+  //     backgroundColor: theme.dangerLight,
+  //     borderRadius: 15,
+  //     paddingTop: 8,
+  //     paddingBottom: 1,
+  //     paddingLeft: 10,
+  //   },
 });
 
 export default LoginRegistration;
