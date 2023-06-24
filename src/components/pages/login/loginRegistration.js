@@ -78,20 +78,22 @@ const LoginRegistration = ({
               </View>
             </>
           )}
-          <TextInput
-            style={styles.input}
-            placeholder="Email"
-            value={email}
-            onChangeText={setEmail}
-            autoCapitalize="none"
-          />
-          <TextInput
-            style={styles.input}
-            placeholder="Password"
-            value={password}
-            onChangeText={setPassword}
-            secureTextEntry
-          />
+          <View style={styles.inputContainer_2}>
+            <TextInput
+              style={styles.inputFull}
+              placeholder="Email"
+              value={email}
+              onChangeText={setEmail}
+              autoCapitalize="none"
+            />
+            <TextInput
+              style={styles.inputFull}
+              placeholder="Password"
+              value={password}
+              onChangeText={setPassword}
+              secureTextEntry
+            />
+          </View>
           {errorMessage !== "" && (
             <Text style={styles.errorText}>{errorMessage}</Text>
           )}
@@ -135,17 +137,10 @@ const styles = StyleSheet.create({
     fontFamily: "MuseoModerno-Bold",
     alignSelf: "center",
   },
-  input: {
-    width: "80%",
-    height: 40,
-    borderColor: "#ccc",
-    borderWidth: 1,
-    borderRadius: 5,
-    marginBottom: 10,
-    paddingHorizontal: 10,
-  },
+
   inputBoxArea: {
     marginTop: "15%",
+    width: "80%",
   },
   toggleText: {
     marginTop: 20,
@@ -155,16 +150,32 @@ const styles = StyleSheet.create({
   inputContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
-    width: "80%",
+    marginBottom: 10,
+  },
+  inputContainer_2: {
     marginBottom: 10,
   },
   inputHalf: {
+    marginRight: 2.5,
+    marginLeft: 2.5,
     flex: 1,
     height: 40,
-    borderColor: "#ccc",
+    borderColor: theme.buttonLight,
     borderWidth: 1,
-    borderRadius: 5,
+    borderRadius: 13,
     paddingHorizontal: 10,
+    backgroundColor: "#fff",
+  },
+  inputFull: {
+    marginRight: 2.5,
+    marginLeft: 2.5,
+    marginBottom: 10,
+    height: 40,
+    borderColor: theme.buttonLight,
+    borderWidth: 1,
+    borderRadius: 13,
+    paddingHorizontal: 10,
+    backgroundColor: "#fff",
   },
   errorText: {
     color: "red",

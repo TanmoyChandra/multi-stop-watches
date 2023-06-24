@@ -10,7 +10,6 @@ import {
   Modal,
 } from "react-native";
 import * as Font from "expo-font";
-import ClockIcon from "../../../assets/clock_icon.png";
 import EditIcon from "../../../assets/edit_icon.png";
 import DeleteIcon from "../../../assets/delete_icon.png";
 
