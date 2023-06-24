@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { View, Text, TextInput, Button, StyleSheet } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { NavigationContainer } from "@react-navigation/native";
@@ -20,6 +20,35 @@ const Authentication = () => {
   const [lastName, setLastName] = useState("");
   const [isRegistering, setIsRegistering] = useState(true);
   const [loggedIn, setLoggedIn] = useState(false);
+
+  const [isLoading, setIsLoading] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    checkLoginStatus();
+  }, []);
+
+  const checkLoginStatus = async () => {
+    try {
+      const userInfo = await AsyncStorage.getItem("userLoginInfo");
+      if (userInfo) {
+        // User is logged in
+        setIsLoggedIn(true);
+      }
+    } catch (error) {
+      console.error("Error checking login status:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  if (isLoading) {
+    return (
+      <View style={styles.loadingContainer}>
+        <Text>Loading...</Text>
+      </View>
+    );
+  }
 
   const registerUser = async () => {
     try {
@@ -95,62 +124,62 @@ const Authentication = () => {
     }
   };
 
-  if (loggedIn) {
-    return (
-      // <NavigationContainer>
-      <NavigationTabs />
-      // </NavigationContainer>
-    );
-  }
-
   return (
-    <View style={styles.container}>
-      <Text style={styles.heading}>{isRegistering ? "Register" : "Login"}</Text>
-      {isRegistering && (
-        <>
+    <>
+      {isLoggedIn || loggedIn ? (
+        <NavigationTabs />
+      ) : (
+        <View style={styles.container}>
+          <Text style={styles.heading}>
+            {isRegistering ? "Register" : "Login"}
+          </Text>
+          {isRegistering && (
+            <>
+              <TextInput
+                style={styles.input}
+                placeholder="First Name"
+                value={firstName}
+                onChangeText={setFirstName}
+                autoCapitalize="none"
+              />
+              <TextInput
+                style={styles.input}
+                placeholder="Last Name"
+                value={lastName}
+                onChangeText={setLastName}
+                autoCapitalize="none"
+              />
+            </>
+          )}
           <TextInput
             style={styles.input}
-            placeholder="First Name"
-            value={firstName}
-            onChangeText={setFirstName}
+            placeholder="Email"
+            value={email}
+            onChangeText={setEmail}
             autoCapitalize="none"
           />
           <TextInput
             style={styles.input}
-            placeholder="Last Name"
-            value={lastName}
-            onChangeText={setLastName}
-            autoCapitalize="none"
+            placeholder="Password"
+            value={password}
+            onChangeText={setPassword}
+            secureTextEntry
           />
-        </>
+          <Button
+            title={isRegistering ? "Register" : "Login"}
+            onPress={isRegistering ? registerUser : loginUser}
+          />
+          <Text
+            style={styles.toggleText}
+            onPress={() => setIsRegistering((prevValue) => !prevValue)}
+          >
+            {isRegistering
+              ? "Already have an account? Login"
+              : "Don't have an account? Register"}
+          </Text>
+        </View>
       )}
-      <TextInput
-        style={styles.input}
-        placeholder="Email"
-        value={email}
-        onChangeText={setEmail}
-        autoCapitalize="none"
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Password"
-        value={password}
-        onChangeText={setPassword}
-        secureTextEntry
-      />
-      <Button
-        title={isRegistering ? "Register" : "Login"}
-        onPress={isRegistering ? registerUser : loginUser}
-      />
-      <Text
-        style={styles.toggleText}
-        onPress={() => setIsRegistering((prevValue) => !prevValue)}
-      >
-        {isRegistering
-          ? "Already have an account? Login"
-          : "Don't have an account? Register"}
-      </Text>
-    </View>
+    </>
   );
 };
 
