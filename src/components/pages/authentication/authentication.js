@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, TextInput, Button, StyleSheet } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { NavigationContainer } from "@react-navigation/native";
 import NavigationTabs from "../../../navigation/tabs";
@@ -9,6 +9,7 @@ import {
   signInWithEmailAndPassword,
 } from "firebase/auth";
 import { getFirestore, collection, addDoc } from "firebase/firestore";
+import LoginRegistration from "../login/loginRegistration";
 
 const auth = getAuth();
 const db = getFirestore();
@@ -133,50 +134,24 @@ const Authentication = () => {
           <Text style={styles.heading}>
             {isRegistering ? "Register" : "Login"}
           </Text>
-          {isRegistering && (
-            <>
-              <TextInput
-                style={styles.input}
-                placeholder="First Name"
-                value={firstName}
-                onChangeText={setFirstName}
-                autoCapitalize="none"
-              />
-              <TextInput
-                style={styles.input}
-                placeholder="Last Name"
-                value={lastName}
-                onChangeText={setLastName}
-                autoCapitalize="none"
-              />
-            </>
-          )}
-          <TextInput
-            style={styles.input}
-            placeholder="Email"
-            value={email}
-            onChangeText={setEmail}
-            autoCapitalize="none"
+          <LoginRegistration
+            isRegistering={isRegistering}
+            firstName={firstName}
+            setFirstName={setFirstName}
+            lastName={lastName}
+            setLastName={setLastName}
+            email={email}
+            setEmail={setEmail}
+            password={password}
+            setPassword={setPassword}
+            onButtonPress={isRegistering ? registerUser : loginUser}
+            toggleText={
+              isRegistering
+                ? "Already have an account? Login"
+                : "Don't have an account? Register"
+            }
+            onTogglePress={() => setIsRegistering((prevValue) => !prevValue)}
           />
-          <TextInput
-            style={styles.input}
-            placeholder="Password"
-            value={password}
-            onChangeText={setPassword}
-            secureTextEntry
-          />
-          <Button
-            title={isRegistering ? "Register" : "Login"}
-            onPress={isRegistering ? registerUser : loginUser}
-          />
-          <Text
-            style={styles.toggleText}
-            onPress={() => setIsRegistering((prevValue) => !prevValue)}
-          >
-            {isRegistering
-              ? "Already have an account? Login"
-              : "Don't have an account? Register"}
-          </Text>
         </View>
       )}
     </>
@@ -194,19 +169,10 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     marginBottom: 20,
   },
-  input: {
-    width: "80%",
-    height: 40,
-    borderColor: "#ccc",
-    borderWidth: 1,
-    borderRadius: 5,
-    marginBottom: 10,
-    paddingHorizontal: 10,
-  },
-  toggleText: {
-    marginTop: 20,
-    color: "blue",
-    textDecorationLine: "underline",
+  loadingContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
 
