@@ -1,31 +1,31 @@
 export const themes = {
-    default: {
-      primaryColor: "#6587FF",
-      
-      primaryBackgroundColor: "#F3F6FF",
-      secondaryBackgroundColor: "#ffffff",
+  default: {
+    primaryColor: "#6587FF",
 
-      textColor_light: "#646477",
-      textColor_dark: "#38385B",
-      textColor_blue: "#D3DDFF",
+    primaryBackgroundColor: "#F3F6FF",
+    secondaryBackgroundColor: "#ffffff",
 
-      buttonLight: "#E1E8FF",
-      dangerLight: "#F8F0F9",
-      
+    textColor_light: "#646477",
+    textColor_dark: "#38385B",
+    textColor_blue: "#D3DDFF",
 
-      activeButtonColor: "#6587FF",
-      deactiveButtonColor:"#78789A",
+    buttonLight: "#E1E8FF",
+    dangerLight: "#F8F0F9",
 
-      buttonColorPrimary: "#6587FF",
-      buttonColorDanger: "#FF6577",
+    activeButtonColor: "#6587FF",
+    deactiveButtonColor: "#78789A",
 
-    },
-    dark: {
-      primaryColor: "#333333",
-      secondaryColor: "#CCCCCC",
-      focusedColor: "#FFFFFF",
-      backgroundColor: "#000000",
-      shadowColor: "#000000",
-      textShadowColor: "#FFFFFF",
-    },
-  };
+    buttonColorPrimary: "#6587FF",
+    buttonColorDanger: "#FF6577",
+
+    accentColor: "#6587FF",
+  },
+  dark: {
+    primaryColor: "#333333",
+    secondaryColor: "#CCCCCC",
+    focusedColor: "#FFFFFF",
+    backgroundColor: "#000000",
+    shadowColor: "#000000",
+    textShadowColor: "#FFFFFF",
+  },
+};

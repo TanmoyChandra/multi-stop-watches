@@ -131,9 +131,9 @@ const Authentication = () => {
         <NavigationTabs />
       ) : (
         <View style={styles.container}>
-          <Text style={styles.heading}>
+          {/* <Text style={styles.heading}>
             {isRegistering ? "Register" : "Login"}
-          </Text>
+          </Text> */}
           <LoginRegistration
             isRegistering={isRegistering}
             firstName={firstName}
