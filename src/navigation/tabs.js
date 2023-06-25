@@ -1,7 +1,7 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 
-import Test from "../components/pages/stopwatch/test";
+import Test from "../components/pages/stopwatch/stopwatch";
 import Saved from "../components/pages/saved/saved";
 import Settings from "../components/pages/setings/settings";
 import Profile from "../components/pages/profile/profile";
