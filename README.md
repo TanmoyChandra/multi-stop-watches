@@ -11,3 +11,5 @@ measurementId: "G-Y68N9Q6B7L"
 };
 
 <!-- build commands -->
+
+eas build --platform android

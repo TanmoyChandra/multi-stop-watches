@@ -36,6 +36,9 @@ const LoginRegistration = ({
       await Font.loadAsync({
         "MuseoModerno-ExtraBold": require("../../../../assets/fonts/MuseoModerno-ExtraBold.ttf"),
         "MuseoModerno-Bold": require("../../../../assets/fonts/MuseoModerno-Bold.ttf"),
+
+        "PlusJakartaSans-Medium": require("../../../../assets/fonts/plus_jakarta_sans/PlusJakartaSans-Medium.ttf"),
+        "PlusJakartaSans-Bold": require("../../../../assets/fonts/plus_jakarta_sans/PlusJakartaSans-Bold.ttf"),
       });
       setFontsLoaded(true);
     };
@@ -158,6 +161,7 @@ const styles = StyleSheet.create({
     height: "100%",
     backgroundColor: theme.primaryBackgroundColor,
     alignItems: "center",
+    fontFamily: "PlusJakartaSans-Medium",
   },
   upperNameArea: {
     width: "100%",
@@ -219,6 +223,7 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     paddingHorizontal: 10,
     backgroundColor: "#fff",
+    fontFamily: "PlusJakartaSans-Medium",
   },
   inputFull: {
     marginRight: 2.5,
@@ -230,6 +235,7 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     paddingHorizontal: 10,
     backgroundColor: "#fff",
+    fontFamily: "PlusJakartaSans-Medium",
   },
   passwordInput: {
     flexDirection: "row",
@@ -243,6 +249,7 @@ const styles = StyleSheet.create({
   passwordInputText: {
     flex: 1,
     height: 45,
+    fontFamily: "PlusJakartaSans-Medium",
   },
   eyeIconContainer: {
     padding: 10,
@@ -268,17 +275,19 @@ const styles = StyleSheet.create({
   customButtonText: {
     color: "white",
     fontSize: 16,
-    fontWeight: "bold",
+    marginTop: -5,
+    fontFamily: "PlusJakartaSans-Bold",
   },
 
   errorBox: {
     width: "95%",
     alignSelf: "center",
-    backgroundColor: theme.dangerLight,
+    // backgroundColor: theme.dangerLight,
     borderRadius: 15,
     paddingTop: 8,
     paddingBottom: 1,
     paddingLeft: 10,
+    fontFamily: "PlusJakartaSans-Medium",
   },
 });
 
