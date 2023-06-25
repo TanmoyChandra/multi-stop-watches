@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   StyleSheet,
   ScrollView,
+  Vibration,
 } from "react-native";
 import { initializeApp } from "firebase/app";
 import StopwatchView from "./stopwatchCard/stopwatchCard";
@@ -62,6 +63,8 @@ const Test = () => {
   }, [userId]);
 
   const addStopwatch = async () => {
+    // Vibrate/Haptic Feedback
+    Vibration.vibrate(150);
     try {
       const newStopwatch = {
         id: uuid.v1(),
