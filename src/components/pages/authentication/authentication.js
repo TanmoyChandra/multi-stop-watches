@@ -3,6 +3,8 @@ import { View, Text, StyleSheet } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { NavigationContainer } from "@react-navigation/native";
 import NavigationTabs from "../../../navigation/tabs";
+import { doc, setDoc, getDoc } from "firebase/firestore";
+
 import {
   getAuth,
   createUserWithEmailAndPassword,
@@ -72,7 +74,6 @@ const Authentication = () => {
   };
 
   const loginUser = async () => {
-    console.log("LOGIN called");
     try {
       const userCredential = await signInWithEmailAndPassword(
         auth,
@@ -80,12 +81,23 @@ const Authentication = () => {
         password
       );
       const user = userCredential.user;
-      console.log("User logged in successfully:", user);
+      console.log("User logged in successfully:");
 
-      // Save user login information to AsyncStorage
-      saveUserLoginInfo(user);
+      // Fetch user information from Firebase Firestore
+      const userDocRef = doc(db, "users", user.uid);
+      const userDocSnapshot = await getDoc(userDocRef);
+      if (userDocSnapshot.exists()) {
+        const userData = userDocSnapshot.data();
+        const { firstName, lastName } = userData;
+        console.log("userData=======", userData);
 
-      setLoggedIn(true);
+        // Save user login information to AsyncStorage
+        saveUserLoginInfo({ ...user, firstName, lastName });
+
+        setLoggedIn(true);
+      } else {
+        console.error("User data not found in Firestore.");
+      }
     } catch (error) {
       console.error("Error logging in user:", error);
     }
@@ -93,7 +105,8 @@ const Authentication = () => {
 
   const saveUserToFirestore = async (user) => {
     try {
-      await addDoc(collection(db, "users"), {
+      const userDocRef = doc(db, "users", user.uid); // Use user UID as document ID
+      await setDoc(userDocRef, {
         uid: user.uid,
         email: user.email,
         firstName: firstName,
@@ -114,8 +127,8 @@ const Authentication = () => {
       const userInfo = {
         uid: user.uid,
         email: user.email,
-        firstName: firstName,
-        lastName: lastName,
+        firstName: user.firstName,
+        lastName: user.lastName,
       };
 
       await AsyncStorage.setItem("userLoginInfo", JSON.stringify(userInfo));
@@ -131,9 +144,6 @@ const Authentication = () => {
         <NavigationTabs />
       ) : (
         <View style={styles.container}>
-          {/* <Text style={styles.heading}>
-            {isRegistering ? "Register" : "Login"}
-          </Text> */}
           <LoginRegistration
             isRegistering={isRegistering}
             firstName={firstName}

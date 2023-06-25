@@ -21,6 +21,7 @@ const Profile = () => {
       const userDetailsJSON = await AsyncStorage.getItem("userLoginInfo");
       if (userDetailsJSON) {
         const userDetails = JSON.parse(userDetailsJSON);
+        console.log(userDetails);
         setUserDetails(userDetails);
       }
     } catch (error) {
