@@ -22,7 +22,6 @@ import {
 import uuid from "react-native-uuid";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { themes } from "../../../themes/themes";
-
 import { query, where } from "firebase/firestore";
 
 const firebaseConfig = {
@@ -53,12 +52,14 @@ const Test = () => {
         console.log("USER ID ->", userId);
 
         const db = getFirestore();
-        const stopwatchCollection = collection(db, "stopwatches");
+        const userStopwatchCollection = collection(
+          db,
+          "stopwatches",
+          userId,
+          "specific-stopwatches"
+        );
 
-        console.log("Collection Reference ->", stopwatchCollection);
-
-        const querySnapshot = await getDocs(stopwatchCollection);
-        console.log("Query Snapshot ->", querySnapshot);
+        const querySnapshot = await getDocs(userStopwatchCollection);
         const fetchedStopwatches = querySnapshot.docs.map((doc) => doc.data());
         setStopwatches(fetchedStopwatches.map(startStopwatchLocally));
       } catch (error) {
@@ -69,20 +70,24 @@ const Test = () => {
     fetchStopwatches();
   }, [userId]);
 
-  // Rest of the code remains the same
-
   const addStopwatch = async () => {
     try {
       const newStopwatch = {
         id: uuid.v1(),
-        userId: userId,
         name: "New Stopwatch",
         timestamp: new Date().toISOString(),
         elapsedSeconds: 0,
       };
 
       const db = getFirestore();
-      const stopwatchRef = doc(db, "stopwatches", newStopwatch.id);
+      const userStopwatchCollection = collection(
+        db,
+        "stopwatches",
+        userId,
+        "specific-stopwatches"
+      );
+      const stopwatchRef = doc(userStopwatchCollection, newStopwatch.id);
+
       await setDoc(stopwatchRef, newStopwatch);
       setStopwatches([...stopwatches, startStopwatchLocally(newStopwatch)]);
     } catch (error) {
@@ -93,7 +98,14 @@ const Test = () => {
   const deleteStopwatch = async (stopwatchId) => {
     try {
       const db = getFirestore();
-      const stopwatchRef = doc(db, "stopwatches", stopwatchId);
+      const userStopwatchCollection = collection(
+        db,
+        "stopwatches",
+        userId,
+        "specific-stopwatches"
+      );
+      const stopwatchRef = doc(userStopwatchCollection, stopwatchId);
+
       await deleteDoc(stopwatchRef);
       setStopwatches(
         stopwatches.filter((stopwatch) => stopwatch.id !== stopwatchId)
@@ -106,9 +118,15 @@ const Test = () => {
   const renameStopwatch = async (stopwatchId, newName) => {
     try {
       const db = getFirestore();
-      const stopwatchRef = doc(db, "stopwatches", stopwatchId);
-      await updateDoc(stopwatchRef, { name: newName });
+      const userStopwatchCollection = collection(
+        db,
+        "stopwatches",
+        userId,
+        "specific-stopwatches"
+      );
+      const stopwatchRef = doc(userStopwatchCollection, stopwatchId);
 
+      await updateDoc(stopwatchRef, { name: newName });
       setStopwatches((prevStopwatches) =>
         prevStopwatches.map((prevStopwatch) => {
           if (prevStopwatch.id === stopwatchId) {
@@ -232,7 +250,7 @@ const styles = StyleSheet.create({
       height: 2,
     },
     shadowOpacity: 1,
-    shadowRadius: 5,
+    shadowRadius: 3.84,
     elevation: 5,
   },
 });
