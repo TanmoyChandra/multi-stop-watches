@@ -10,8 +10,8 @@ import {
   Modal,
 } from "react-native";
 import * as Font from "expo-font";
-import EditIcon from "../../../assets/edit_icon.png";
-import DeleteIcon from "../../../assets/delete_icon.png";
+import EditIcon from "../../../../../assets/edit_icon.png";
+import DeleteIcon from "../../../../../assets/delete_icon.png";
 
 import { themes } from "../../../../themes/themes";
 const theme = themes.default; // Change this to select a different theme
@@ -27,8 +27,8 @@ const StopwatchView = ({ id, name, time, onDelete, onRename }) => {
   useEffect(() => {
     const loadFonts = async () => {
       await Font.loadAsync({
-        "PlusJakartaSans-Regular": require("../../../assets/fonts/plus_jakarta_sans/PlusJakartaSans-Bold.ttf"),
-        "MuseoModerno-Bold": require("../../../assets/fonts/MuseoModerno-Bold.ttf"),
+        "PlusJakartaSans-Regular": require("../../../../../assets/fonts/plus_jakarta_sans/PlusJakartaSans-Bold.ttf"),
+        "MuseoModerno-Bold": require("../../../../../assets/fonts/MuseoModerno-Bold.ttf"),
       });
       setFontsLoaded(true);
     };
