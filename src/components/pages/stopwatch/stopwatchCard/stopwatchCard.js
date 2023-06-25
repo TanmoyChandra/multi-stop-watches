@@ -13,7 +13,7 @@ import * as Font from "expo-font";
 import EditIcon from "../../../assets/edit_icon.png";
 import DeleteIcon from "../../../assets/delete_icon.png";
 
-import { themes } from "../../themes/themes";
+import { themes } from "../../../../themes/themes";
 const theme = themes.default; // Change this to select a different theme
 
 const { width } = Dimensions.get("window");

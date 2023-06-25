@@ -8,8 +8,9 @@ import {
   ScrollView,
 } from "react-native";
 import { initializeApp } from "firebase/app";
-import StopwatchView from "./StopwatchCard/StopwatchCard";
-import addIcon from ".././../assets/add.png";
+import StopwatchView from "./stopwatchCard/stopwatchCard";
+// import addIcon from "../../../../assets/add.png";
+import addIcon from "../../../../assets/add.png";
 import {
   getFirestore,
   collection,
@@ -21,7 +22,7 @@ import {
 } from "firebase/firestore/lite";
 import uuid from "react-native-uuid";
 
-import { themes } from "../themes/themes";
+import { themes } from "../../../themes/themes";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDRrUVRi5m-fuBk45zt8LYQSiMjWP4-Cx8",
@@ -184,7 +185,6 @@ const Test = () => {
 };
 
 const styles = StyleSheet.create({
-
   scrollContainer: {
     paddingBottom: 100,
   },
