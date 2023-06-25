@@ -9,7 +9,6 @@ import {
 } from "react-native";
 import { initializeApp } from "firebase/app";
 import StopwatchView from "./stopwatchCard/stopwatchCard";
-// import addIcon from "../../../../assets/add.png";
 import addIcon from "../../../../assets/add.png";
 import {
   getFirestore,
@@ -21,8 +20,10 @@ import {
   updateDoc,
 } from "firebase/firestore/lite";
 import uuid from "react-native-uuid";
-
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { themes } from "../../../themes/themes";
+
+import { query, where } from "firebase/firestore";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDRrUVRi5m-fuBk45zt8LYQSiMjWP4-Cx8",
@@ -36,19 +37,29 @@ const firebaseConfig = {
 
 initializeApp(firebaseConfig);
 
-const theme = themes.default; // Change this to select a different theme
+const theme = themes.default;
 
 const Test = () => {
   const [stopwatches, setStopwatches] = useState([]);
+  const [userId, setUserId] = useState("");
 
-  // Fetch stopwatches from Firebase when the component mounts
   useEffect(() => {
     const fetchStopwatches = async () => {
       try {
+        const userLoginInfo = await AsyncStorage.getItem("userLoginInfo");
+        const userInfo = JSON.parse(userLoginInfo);
+        const userId = userInfo.uid;
+        setUserId(userId);
+        console.log("USER ID ->", userId);
+
         const db = getFirestore();
         const stopwatchCollection = collection(db, "stopwatches");
-        const snapshot = await getDocs(stopwatchCollection);
-        const fetchedStopwatches = snapshot.docs.map((doc) => doc.data());
+
+        console.log("Collection Reference ->", stopwatchCollection);
+
+        const querySnapshot = await getDocs(stopwatchCollection);
+        console.log("Query Snapshot ->", querySnapshot);
+        const fetchedStopwatches = querySnapshot.docs.map((doc) => doc.data());
         setStopwatches(fetchedStopwatches.map(startStopwatchLocally));
       } catch (error) {
         console.error("Error fetching stopwatches:", error);
@@ -56,13 +67,15 @@ const Test = () => {
     };
 
     fetchStopwatches();
-  }, []);
+  }, [userId]);
 
-  // Add a new stopwatch to Firebase
+  // Rest of the code remains the same
+
   const addStopwatch = async () => {
     try {
       const newStopwatch = {
         id: uuid.v1(),
+        userId: userId,
         name: "New Stopwatch",
         timestamp: new Date().toISOString(),
         elapsedSeconds: 0,
@@ -77,7 +90,6 @@ const Test = () => {
     }
   };
 
-  // Delete a stopwatch from Firebase and the state
   const deleteStopwatch = async (stopwatchId) => {
     try {
       const db = getFirestore();
@@ -91,7 +103,6 @@ const Test = () => {
     }
   };
 
-  // Rename a stopwatch in Firebase and update the state
   const renameStopwatch = async (stopwatchId, newName) => {
     try {
       const db = getFirestore();
@@ -114,7 +125,6 @@ const Test = () => {
     }
   };
 
-  // Start incrementing elapsed time for a stopwatch
   const startStopwatchLocally = (stopwatch) => {
     const startTime = new Date(stopwatch.timestamp).getTime();
     const intervalId = setInterval(() => {
@@ -133,7 +143,7 @@ const Test = () => {
           return prevStopwatch;
         });
       });
-    }, 1000); // Increment elapsed time every 1 second
+    }, 1000);
 
     return {
       ...stopwatch,
@@ -141,7 +151,6 @@ const Test = () => {
     };
   };
 
-  // Format the elapsed time in HH:mm:ss format
   const formatElapsedTime = (elapsedSeconds) => {
     const hours = Math.floor(elapsedSeconds / 3600);
     const minutes = Math.floor((elapsedSeconds % 3600) / 60);
@@ -153,7 +162,6 @@ const Test = () => {
 
   return (
     <View style={styles.background}>
-      {/* All the stopwatches will be here */}
       <ScrollView
         contentContainerStyle={styles.scrollContainer}
         showsVerticalScrollIndicator={false}
@@ -164,9 +172,7 @@ const Test = () => {
             id={stopwatch.id}
             name={stopwatch.name}
             time={formatElapsedTime(stopwatch.elapsedSeconds)}
-            onStop={() => {
-              /* Handle stop button press */
-            }}
+            onStop={() => {}}
             onDelete={() => deleteStopwatch(stopwatch.id)}
             onRename={renameStopwatch}
           />
@@ -188,7 +194,6 @@ const styles = StyleSheet.create({
   scrollContainer: {
     paddingBottom: 100,
   },
-
   heading: {
     color: "#F9EAFF",
     fontSize: 40,
@@ -196,7 +201,6 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
     textAlign: "left",
     paddingLeft: "5%",
-
     textShadowColor: "#4F3A7B",
     textShadowOffset: { width: 1, height: 1 },
     textShadowRadius: 2,
@@ -208,7 +212,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     position: "relative",
   },
-
   ClockIcon: {
     height: 23,
     width: 23,
