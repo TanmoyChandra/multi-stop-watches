@@ -22,13 +22,13 @@ import {
 } from "firebase/firestore/lite";
 import uuid from "react-native-uuid";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+
 import { themes } from "../../../themes/themes";
+const theme = themes.default;
 
 import firebaseConfig from "../../../../config/config";
 
 initializeApp(firebaseConfig);
-
-const theme = themes.default;
 
 const Test = () => {
   const [stopwatches, setStopwatches] = useState([]);
