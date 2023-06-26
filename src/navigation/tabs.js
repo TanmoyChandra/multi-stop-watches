@@ -62,6 +62,7 @@ const NavigationTabs = () => {
         ],
       }}
     >
+      {/* Stopwatch */}
       <Tab.Screen
         name="Stopwatch"
         component={Test}
@@ -104,6 +105,7 @@ const NavigationTabs = () => {
         }}
       ></Tab.Screen>
 
+      {/* Timer */}
       <Tab.Screen
         name="Timer"
         component={Test}
@@ -146,6 +148,7 @@ const NavigationTabs = () => {
         }}
       ></Tab.Screen>
 
+      {/* Saved */}
       <Tab.Screen
         name="Saved"
         component={Saved}
@@ -188,6 +191,7 @@ const NavigationTabs = () => {
         }}
       ></Tab.Screen>
 
+      {/* Saved */}
       <Tab.Screen
         name="Settings"
         component={Settings}
@@ -230,6 +234,7 @@ const NavigationTabs = () => {
         }}
       ></Tab.Screen>
 
+      {/* Profile */}
       <Tab.Screen
         name="Profile"
         component={Profile}
