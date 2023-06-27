@@ -5,6 +5,9 @@ import { StatusBar } from "expo-status-bar";
 import Authentication from "./src/components/pages/authentication/authentication";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
+import { themes } from "./src/themes/themes";
+const theme = themes.default;
+
 const Tab = createBottomTabNavigator();
 
 export default function App() {
@@ -23,7 +26,7 @@ export default function App() {
           options={{ headerShown: false }} // Hide the header
         />
       </Tab.Navigator>
-      <StatusBar style="light" />
+      <StatusBar backgroundColor={theme.statusBarColor} style="light" />
     </NavigationContainer>
   );
 }

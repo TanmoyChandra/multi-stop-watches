@@ -19,6 +19,8 @@ export const themes = {
     buttonColorDanger: "#FF6577",
 
     accentColor: "#6587FF",
+
+    statusBarColor: "#5b7ae6",
   },
   dark: {
     primaryColor: "#333333",
