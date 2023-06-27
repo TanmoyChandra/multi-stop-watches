@@ -8,6 +8,7 @@ import {
   ScrollView,
   Vibration,
 } from "react-native";
+import { AppState } from "react-native";
 import { initializeApp } from "firebase/app";
 import StopwatchView from "./stopwatchCard/stopwatchCard";
 import addIcon from "../../../../assets/add.png";
@@ -25,6 +26,9 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import * as Device from "expo-device";
 import * as Notifications from "expo-notifications";
+
+import * as BackgroundFetch from "expo-background-fetch";
+import * as TaskManager from "expo-task-manager";
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -45,11 +49,58 @@ const Test = () => {
   const [stopwatches, setStopwatches] = useState([]);
   const [userId, setUserId] = useState("");
 
-  // noti
+  // notification related
   const [expoPushToken, setExpoPushToken] = useState("");
   const [notification, setNotification] = useState(false);
   const notificationListener = useRef();
   const responseListener = useRef();
+
+  //background task
+  const BACKGROUND_TASK_NAME = "printTask";
+
+  const handleBackgroundTask = async () => {
+    console.log("notification will be here something...");
+    stopwatches.forEach((stopwatch) => {
+      console.log("Stopwatch Name:", stopwatch.name);
+      console.log("Elapsed Time:", stopwatch.elapsedSeconds, "seconds");
+
+      const elapsedSeconds = stopwatch.elapsedSeconds;
+      const hours = Math.floor(elapsedSeconds / 3600);
+      const minutes = Math.floor((elapsedSeconds % 3600) / 60);
+      const seconds = elapsedSeconds % 60;
+
+      schedulePushNotification(
+        stopwatch.name,
+        hours + " : " + minutes + " : " + seconds
+      );
+    });
+
+    // Perform any other background tasks here
+
+    return BackgroundFetch;
+  };
+
+  TaskManager.defineTask(BACKGROUND_TASK_NAME, handleBackgroundTask);
+  // background task end
+
+  useEffect(() => {
+    const checkBackgroundStatus = async () => {
+      const appState = await AppState.currentState;
+      if (appState === "background") {
+        await BackgroundFetch.registerTaskAsync(BACKGROUND_TASK_NAME, {
+          minimumInterval: 1, // Minimum interval in minutes
+        });
+      }
+    };
+
+    AppState.addEventListener("change", checkBackgroundStatus);
+    checkBackgroundStatus();
+
+    return () => {
+      AppState.removeEventListener("change", checkBackgroundStatus);
+      BackgroundFetch.unregisterTaskAsync(BACKGROUND_TASK_NAME);
+    };
+  }, []);
 
   useEffect(() => {
     const fetchStopwatches = async () => {
@@ -289,11 +340,11 @@ const styles = StyleSheet.create({
   },
 });
 
-async function schedulePushNotification() {
+async function schedulePushNotification(name, time) {
   await Notifications.scheduleNotificationAsync({
     content: {
-      title: "You've got mail! 📬",
-      body: "Here is the notification body",
+      title: name,
+      body: "Elapsed time is " + time,
       data: { data: "goes here" },
     },
     trigger: null,

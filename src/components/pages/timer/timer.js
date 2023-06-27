@@ -1,106 +1,41 @@
-import React, { useState } from "react";
-import { View, Text, TouchableOpacity } from "react-native";
-import {
-  Provider as PaperProvider,
-  Modal,
-  Portal,
-  Button,
-  TextInput,
-} from "react-native-paper";
+// import React, { useEffect } from "react";
+// import { AppState } from "react-native";
+// import * as BackgroundFetch from "expo-background-fetch";
+// import * as TaskManager from "expo-task-manager";
 
-const Timer = () => {
-  const [modalVisible, setModalVisible] = useState(false);
-  const [selectedHours, setSelectedHours] = useState("0");
-  const [selectedMinutes, setSelectedMinutes] = useState("0");
-  const [selectedSeconds, setSelectedSeconds] = useState("0");
+// const BACKGROUND_TASK_NAME = "printTask";
 
-  const handleTimerSelection = () => {
-    setModalVisible(true);
-  };
+// const handleBackgroundTask = async () => {
+//   console.log("Printing something...");
 
-  const handleStartTimer = () => {
-    setModalVisible(false);
-    // Start the timer with the selected duration
-    const totalSeconds =
-      parseInt(selectedHours) * 3600 +
-      parseInt(selectedMinutes) * 60 +
-      parseInt(selectedSeconds);
-    // Start the timer logic here...
-  };
+//   // Perform any other background tasks here
 
-  return (
-    <PaperProvider>
-      <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-        <TouchableOpacity
-          style={{
-            paddingVertical: 10,
-            paddingHorizontal: 20,
-            backgroundColor: "blue",
-            borderRadius: 5,
-          }}
-          onPress={handleTimerSelection}
-        >
-          <Text style={{ fontSize: 16, color: "white" }}>
-            Select Timer Duration
-          </Text>
-        </TouchableOpacity>
-        <Portal>
-          <Modal
-            visible={modalVisible}
-            onDismiss={() => setModalVisible(false)}
-          >
-            <View
-              style={{
-                backgroundColor: "white",
-                padding: 20,
-                borderRadius: 10,
-              }}
-            >
-              <Text style={{ fontSize: 20, marginBottom: 10 }}>
-                Select Timer Duration:
-              </Text>
-              <View
-                style={{
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                  marginBottom: 10,
-                }}
-              >
-                <TextInput
-                  label="Hours"
-                  value={selectedHours}
-                  onChangeText={(value) => setSelectedHours(value)}
-                  keyboardType="numeric"
-                  style={{ flex: 1, marginRight: 10 }}
-                />
-                <TextInput
-                  label="Minutes"
-                  value={selectedMinutes}
-                  onChangeText={(value) => setSelectedMinutes(value)}
-                  keyboardType="numeric"
-                  style={{ flex: 1, marginRight: 10 }}
-                />
-                <TextInput
-                  label="Seconds"
-                  value={selectedSeconds}
-                  onChangeText={(value) => setSelectedSeconds(value)}
-                  keyboardType="numeric"
-                  style={{ flex: 1 }}
-                />
-              </View>
-              <Button
-                mode="contained"
-                onPress={handleStartTimer}
-                style={{ marginTop: 20 }}
-              >
-                Select
-              </Button>
-            </View>
-          </Modal>
-        </Portal>
-      </View>
-    </PaperProvider>
-  );
-};
+//   return BackgroundFetch;
+// };
 
-export default Timer;
+// TaskManager.defineTask(BACKGROUND_TASK_NAME, handleBackgroundTask);
+
+// const Timer = () => {
+//   useEffect(() => {
+//     const checkBackgroundStatus = async () => {
+//       const appState = await AppState.currentState;
+//       if (appState === "background") {
+//         await BackgroundFetch.registerTaskAsync(BACKGROUND_TASK_NAME, {
+//           minimumInterval: 1, // Minimum interval in minutes
+//         });
+//       }
+//     };
+
+//     AppState.addEventListener("change", checkBackgroundStatus);
+//     checkBackgroundStatus();
+
+//     return () => {
+//       AppState.removeEventListener("change", checkBackgroundStatus);
+//       BackgroundFetch.unregisterTaskAsync(BACKGROUND_TASK_NAME);
+//     };
+//   }, []);
+
+//   return <></>;
+// };
+
+// export default Timer;

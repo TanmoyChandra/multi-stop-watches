@@ -2,7 +2,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 
 import Test from "../components/pages/stopwatch/stopwatch";
-import Timer from "../components/pages/timer/timer";
+// import Timer from "../components/pages/timer/timer";
 import Saved from "../components/pages/saved/saved";
 import Settings from "../components/pages/setings/settings";
 import Profile from "../components/pages/profile/profile";
@@ -12,8 +12,8 @@ import { TouchableRipple } from "react-native-paper";
 import stopwatch from "../../assets/navigation_icons/stopwatch.png";
 import stopwatch_fill from "../../assets/navigation_icons/stopwatch_fill.png";
 
-import timer from "../../assets/navigation_icons/timer.png";
-import timer_fill from "../../assets/navigation_icons/timer_fill.png";
+// import timer from "../../assets/navigation_icons/timer.png";
+// import timer_fill from "../../assets/navigation_icons/timer_fill.png";
 
 import bookmark from "../../assets/navigation_icons/bookmark.png";
 import bookmark_fill from "../../assets/navigation_icons/bookmark_fill.png";
@@ -107,7 +107,7 @@ const NavigationTabs = () => {
       ></Tab.Screen>
 
       {/* Timer */}
-      <Tab.Screen
+      {/* <Tab.Screen
         name="Timer"
         component={Timer}
         options={{
@@ -147,7 +147,7 @@ const NavigationTabs = () => {
             </View>
           ),
         }}
-      ></Tab.Screen>
+      ></Tab.Screen> */}
 
       {/* Saved */}
       <Tab.Screen
