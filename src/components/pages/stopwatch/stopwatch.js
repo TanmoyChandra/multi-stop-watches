@@ -33,7 +33,7 @@ import * as TaskManager from "expo-task-manager";
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
     shouldShowAlert: true,
-    shouldPlaySound: true,
+    shouldPlaySound: false,
     shouldSetBadge: true,
   }),
 });
@@ -45,6 +45,8 @@ import firebaseConfig from "../../../../config/config";
 
 initializeApp(firebaseConfig);
 
+const BACKGROUND_TASK_NAME = "printTask";
+
 const Test = () => {
   const [stopwatches, setStopwatches] = useState([]);
   const [userId, setUserId] = useState("");
@@ -55,9 +57,7 @@ const Test = () => {
   const notificationListener = useRef();
   const responseListener = useRef();
 
-  //background task
-  const BACKGROUND_TASK_NAME = "printTask";
-
+  // background task
   const handleBackgroundTask = async () => {
     console.log("notification will be here something...");
 
@@ -72,14 +72,15 @@ const Test = () => {
       const seconds = elapsedSeconds % 60;
 
       schedulePushNotification(
+        stopwatch.id,
         stopwatch.name,
-        hours + " : " + minutes + " : " + seconds
+        hours + ":" + minutes + ":" + seconds
       );
     });
 
     // Perform any other background tasks here
 
-    return BackgroundFetch;
+    return BackgroundFetch.Result.NewData;
   };
 
   TaskManager.defineTask(BACKGROUND_TASK_NAME, handleBackgroundTask);
@@ -176,7 +177,11 @@ const Test = () => {
       await setDoc(stopwatchRef, newStopwatch);
       setStopwatches([...stopwatches, startStopwatchLocally(newStopwatch)]);
 
-      await schedulePushNotification();
+      await schedulePushNotification(
+        newStopwatch.id,
+        newStopwatch.name,
+        "0:0:0"
+      );
     } catch (error) {
       console.error("Error adding stopwatch:", error);
     }
@@ -248,6 +253,12 @@ const Test = () => {
           return prevStopwatch;
         });
       });
+
+      schedulePushNotification(
+        stopwatch.id,
+        stopwatch.name,
+        formatElapsedTime(elapsedSeconds)
+      );
     }, 1000);
 
     return {
@@ -342,8 +353,9 @@ const styles = StyleSheet.create({
   },
 });
 
-async function schedulePushNotification(name, time) {
+async function schedulePushNotification(id, name, time) {
   await Notifications.scheduleNotificationAsync({
+    identifier: id,
     content: {
       title: name,
       body: "Elapsed time is " + time,
@@ -383,6 +395,14 @@ async function registerForPushNotificationsAsync() {
     alert("Must use physical device for Push Notifications");
   }
 
+  if (Platform.OS === "android") {
+    Notifications.setNotificationChannelAsync("default", {
+      name: "default",
+      importance: Notifications.AndroidImportance.MAX,
+      vibrationPattern: [0, 250, 250, 250],
+      lightColor: "#FF231F7C",
+    });
+  }
   return token;
 }
 
