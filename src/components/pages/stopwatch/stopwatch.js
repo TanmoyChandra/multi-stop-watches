@@ -82,7 +82,8 @@ const Test = () => {
 
     // Perform any other background tasks here
 
-    return BackgroundFetch.Result.NewData;
+    return BackgroundFetch.Result;
+    // return BackgroundFetch.Result.NewData;
   };
 
   TaskManager.defineTask(BACKGROUND_TASK_NAME, handleBackgroundTask);
