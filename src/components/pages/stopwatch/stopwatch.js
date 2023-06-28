@@ -60,11 +60,13 @@ const Test = () => {
 
   const handleBackgroundTask = async () => {
     console.log("notification will be here something...");
-    stopwatches.forEach((stopwatch) => {
-      console.log("Stopwatch Name:", stopwatch.name);
-      console.log("Elapsed Time:", stopwatch.elapsedSeconds, "seconds");
 
-      const elapsedSeconds = stopwatch.elapsedSeconds;
+    stopwatches.forEach((stopwatch) => {
+      const timestamp = new Date(stopwatch.timestamp);
+      const currentTime = new Date();
+      const elapsedMilliseconds = currentTime - timestamp;
+      const elapsedSeconds = Math.floor(elapsedMilliseconds / 1000);
+
       const hours = Math.floor(elapsedSeconds / 3600);
       const minutes = Math.floor((elapsedSeconds % 3600) / 60);
       const seconds = elapsedSeconds % 60;
