@@ -71,11 +71,13 @@ const Test = () => {
       const minutes = Math.floor((elapsedSeconds % 3600) / 60);
       const seconds = elapsedSeconds % 60;
 
-      schedulePushNotification(
-        stopwatch.id,
-        stopwatch.name,
-        hours + ":" + minutes + ":" + seconds
-      );
+      let time_string = "";
+      if (hours == 0) {
+        time_string = minutes + "m";
+      } else {
+        time_string = hours + "h " + minutes + "m";
+      }
+      schedulePushNotification(stopwatch.id, stopwatch.name, time_string);
     });
 
     // Perform any other background tasks here
@@ -88,10 +90,10 @@ const Test = () => {
 
   useEffect(() => {
     const checkBackgroundStatus = async () => {
-      const appState = await AppState.currentState;
+      const appState = AppState.currentState; //await removed
       if (appState === "background") {
         await BackgroundFetch.registerTaskAsync(BACKGROUND_TASK_NAME, {
-          minimumInterval: 1, // Minimum interval in minutes
+          minimumInterval: 60 * 1, // Minimum interval in minutes
         });
       }
     };
@@ -358,6 +360,7 @@ async function schedulePushNotification(id, name, time) {
     identifier: id,
     content: {
       title: name,
+      sound: null, // Disable notification sound
       body: "Elapsed time is " + time,
       data: { data: "goes here" },
     },
