@@ -205,10 +205,42 @@ const Test = () => {
       setStopwatches(
         stopwatches.filter((stopwatch) => stopwatch.id !== stopwatchId)
       );
+      removeAllNotifications();
     } catch (error) {
       console.error("Error deleting stopwatch:", error);
     }
   };
+
+  // dismis all notification end
+
+  // Listen for changes in app state
+  const handleAppStateChange = (nextAppState) => {
+    if (nextAppState === "background") {
+      removeAllNotifications();
+    }
+  };
+
+  // Register the app state change listener
+  useEffect(() => {
+    AppState.addEventListener("change", handleAppStateChange);
+
+    // Clean up the listener when component unmounts
+    return () => {
+      AppState.removeEventListener("change", handleAppStateChange);
+    };
+  }, []);
+
+  // Function to remove all notifications
+  const removeAllNotifications = async () => {
+    try {
+      await Notifications.dismissAllNotificationsAsync();
+      console.log("All notifications have been dismissed.");
+    } catch (error) {
+      console.error("Error dismissing notifications:", error);
+    }
+  };
+
+  // dismis all notification end
 
   const renameStopwatch = async (stopwatchId, newName) => {
     try {
