@@ -10,8 +10,14 @@ import {
   Modal,
 } from "react-native";
 import * as Font from "expo-font";
-import EditIcon from "../../../../../assets/edit_icon.png";
-import DeleteIcon from "../../../../../assets/delete_icon.png";
+import EditIcon from "../../../../../assets/card_icons/pencil.png";
+import DeleteIcon from "../../../../../assets/card_icons/stop.png";
+
+// below card icons
+import PlayIcon from "../../../../../assets/card_below_icons/play.png";
+import PauseIcon from "../../../../../assets/card_below_icons/pause.png";
+import SaveIcon from "../../../../../assets/card_below_icons/bookmark.png";
+import SmallDeleteIcon from "../../../../../assets/card_below_icons/trash.png";
 
 import { themes } from "../../../../themes/themes";
 const theme = themes.default; // Change this to select a different theme
@@ -61,31 +67,38 @@ const StopwatchView = ({ id, name, time, onDelete, onRename }) => {
           <View style={styles.columnContainer_3}>
             <TouchableOpacity onPress={() => setModalVisible(true)}>
               <View style={styles.addButton}>
-                <Image source={EditIcon} style={styles.ClockIcon} />
+                <Image source={EditIcon} style={styles.EditIcon} />
               </View>
             </TouchableOpacity>
           </View>
           <View style={styles.columnContainer_4}>
             <TouchableOpacity onPress={onDelete}>
               <View style={styles.addButton}>
-                <Image source={DeleteIcon} style={styles.ClockIcon} />
-              </View>
-            </TouchableOpacity>
-          </View>
-
-          <View style={styles.columnContainer_4}>
-            <TouchableOpacity onPress={onDelete}>
-              <View style={styles.addButton}>
-                <Image source={DeleteIcon} style={styles.ClockIcon} />
+                <Image source={DeleteIcon} style={styles.DeleteIcon} />
               </View>
             </TouchableOpacity>
           </View>
         </View>
 
-        <View>
-          <TouchableOpacity onPress={onDelete}>
-            <View style={styles.addButtonNew}>
-              <Image source={DeleteIcon} style={styles.ClockIcon} />
+        <View style={styles.belowButtonsArea}>
+          <TouchableOpacity>
+            <View style={styles.belowButtonOuterBox}>
+              <Image source={PauseIcon} style={styles.BelowButtonIconUI} />
+            </View>
+          </TouchableOpacity>
+
+          <TouchableOpacity>
+            <View style={styles.belowButtonOuterBox}>
+              <Image source={SaveIcon} style={styles.BelowButtonIconUI} />
+            </View>
+          </TouchableOpacity>
+
+          <TouchableOpacity>
+            <View style={styles.belowButtonOuterBox}>
+              <Image
+                source={SmallDeleteIcon}
+                style={styles.BelowButtonIconUI}
+              />
             </View>
           </TouchableOpacity>
         </View>
@@ -126,11 +139,12 @@ const styles = StyleSheet.create({
   card: {
     backgroundColor: theme.secondaryBackgroundColor,
     borderRadius: 25,
+    borderBottomEndRadius: 0,
     padding: 16,
 
-    marginTop: -30,
+    // marginTop: -30,
 
-    height: 95,
+    height: 85,
     width: cardWidth,
     flexDirection: "row",
     justifyContent: "space-between",
@@ -138,30 +152,50 @@ const styles = StyleSheet.create({
   },
 
   cardOptions: {
+    height: 105,
+    width: cardWidth,
+
     flexDirection: "column",
-    backgroundColor: "#f2f2f2",
+    // backgroundColor: "#f2f2f2",
     borderRadius: 0,
     padding: 0,
 
     borderRadius: 25,
-    marginTop: 10,
-    marginBottom: 10,
-
-    height: 125,
-    width: cardWidth,
+    marginTop: 25,
+    marginBottom: 25,
 
     justifyContent: "space-between",
     alignItems: "center",
   },
 
-  addButtonNew: {
-    // backgroundColor: theme.buttonLight,
-    marginTop: 100,
+  belowButtonsArea: {
+    height: 40,
+    width: 150,
+    backgroundColor: theme.secondaryBackgroundColor,
+    alignSelf: "flex-end",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    borderBottomEndRadius: 25,
+    borderBottomLeftRadius: 25,
+    paddingStart: 10,
+    paddingEnd: 10,
+  },
+
+  belowButtonOuterBox: {
+    backgroundColor: theme.buttonLight,
+    // marginTop: 100,
     borderRadius: 10,
-    width: 20,
-    height: 20,
-    // justifyContent: "center",
-    // alignItems: "center",
+    width: 30,
+    height: 30,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+
+  BelowButtonIconUI: {
+    width: 17,
+    height: 17,
+    resizeMode: "contain",
+    tintColor: "#8c8c8c",
   },
 
   addButton: {
@@ -182,11 +216,19 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
 
-  ClockIcon: {
-    width: 25,
-    height: 25,
+  EditIcon: {
+    width: 18,
+    height: 18,
     marginLeft: -2,
     resizeMode: "contain",
+    tintColor: theme.accentColor,
+  },
+  DeleteIcon: {
+    width: 17,
+    height: 17,
+    marginLeft: -2,
+    resizeMode: "contain",
+    tintColor: theme.buttonColorDanger,
   },
   columnContainer_2: {
     flex: 5,
