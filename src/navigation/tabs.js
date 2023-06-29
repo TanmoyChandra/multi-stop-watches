@@ -192,7 +192,7 @@ const NavigationTabs = () => {
         }}
       ></Tab.Screen>
 
-      {/* Saved */}
+      {/* Settings */}
       <Tab.Screen
         name="Settings"
         component={Settings}

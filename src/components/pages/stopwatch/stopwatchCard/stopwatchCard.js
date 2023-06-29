@@ -46,37 +46,49 @@ const StopwatchView = ({ id, name, time, onDelete, onRename }) => {
     return null; // or a loading spinner
   }
   return (
-    <View style={styles.card}>
-      <View style={styles.columnContainer_2}>
-        <View style={styles.rowContainer}>
-          <Text style={styles.name}>{name}</Text>
-        </View>
-        <View style={styles.rowContainer}>
-          <Text style={styles.elapsedTime}>{time}</Text>
-        </View>
-      </View>
+    <>
+      <View style={styles.cardOptions}>
+        <View style={styles.card}>
+          <View style={styles.columnContainer_2}>
+            <View style={styles.rowContainer}>
+              <Text style={styles.name}>{name}</Text>
+            </View>
+            <View style={styles.rowContainer}>
+              <Text style={styles.elapsedTime}>{time}</Text>
+            </View>
+          </View>
 
-      <View style={styles.columnContainer_3}>
-        <TouchableOpacity onPress={() => setModalVisible(true)}>
-          <View style={styles.addButton}>
-            <Image source={EditIcon} style={styles.ClockIcon} />
+          <View style={styles.columnContainer_3}>
+            <TouchableOpacity onPress={() => setModalVisible(true)}>
+              <View style={styles.addButton}>
+                <Image source={EditIcon} style={styles.ClockIcon} />
+              </View>
+            </TouchableOpacity>
           </View>
-        </TouchableOpacity>
-      </View>
-      <View style={styles.columnContainer_4}>
-        <TouchableOpacity onPress={onDelete}>
-          <View style={styles.addButton}>
-            <Image source={DeleteIcon} style={styles.ClockIcon} />
+          <View style={styles.columnContainer_4}>
+            <TouchableOpacity onPress={onDelete}>
+              <View style={styles.addButton}>
+                <Image source={DeleteIcon} style={styles.ClockIcon} />
+              </View>
+            </TouchableOpacity>
           </View>
-        </TouchableOpacity>
-      </View>
 
-      <View style={styles.columnContainer_4}>
-        <TouchableOpacity onPress={onDelete}>
-          <View style={styles.addButton}>
-            <Image source={DeleteIcon} style={styles.ClockIcon} />
+          <View style={styles.columnContainer_4}>
+            <TouchableOpacity onPress={onDelete}>
+              <View style={styles.addButton}>
+                <Image source={DeleteIcon} style={styles.ClockIcon} />
+              </View>
+            </TouchableOpacity>
           </View>
-        </TouchableOpacity>
+        </View>
+
+        <View>
+          <TouchableOpacity onPress={onDelete}>
+            <View style={styles.addButtonNew}>
+              <Image source={DeleteIcon} style={styles.ClockIcon} />
+            </View>
+          </TouchableOpacity>
+        </View>
       </View>
 
       {/* Rename Modal */}
@@ -106,7 +118,7 @@ const StopwatchView = ({ id, name, time, onDelete, onRename }) => {
           </View>
         </View>
       </Modal>
-    </View>
+    </>
   );
 };
 
@@ -116,13 +128,40 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     padding: 16,
 
-    marginTop: 20,
+    marginTop: -30,
 
     height: 95,
     width: cardWidth,
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
+  },
+
+  cardOptions: {
+    flexDirection: "column",
+    backgroundColor: "#f2f2f2",
+    borderRadius: 0,
+    padding: 0,
+
+    borderRadius: 25,
+    marginTop: 10,
+    marginBottom: 10,
+
+    height: 125,
+    width: cardWidth,
+
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+
+  addButtonNew: {
+    // backgroundColor: theme.buttonLight,
+    marginTop: 100,
+    borderRadius: 10,
+    width: 20,
+    height: 20,
+    // justifyContent: "center",
+    // alignItems: "center",
   },
 
   addButton: {
