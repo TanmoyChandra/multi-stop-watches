@@ -4,7 +4,7 @@ import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 import Test from "../components/pages/stopwatch/stopwatch";
 // import Timer from "../components/pages/timer/timer";
 import Saved from "../components/pages/saved/saved";
-import Settings from "../components/pages/setings/settings";
+import Settings from "../components/pages/settings/settings";
 import Profile from "../components/pages/profile/profile";
 
 import { TouchableRipple } from "react-native-paper";
