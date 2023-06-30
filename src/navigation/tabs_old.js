@@ -1,22 +1,28 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 
-import Test from "../components/test";
+import Test from "../components/pages/stopwatch/stopwatch";
+// import Timer from "../components/pages/timer/timer";
 import Saved from "../components/pages/saved/saved";
-import Settings from "../components/pages/setings/settings";
+import Settings from "../components/pages/settings/settings";
 import Profile from "../components/pages/profile/profile";
 
 import { TouchableRipple } from "react-native-paper";
 
-import user from "../../assets/navigation_icons/user.png";
-import settings from "../../assets/navigation_icons/settings.png";
-import stopwatch from "../../assets/navigation_icons/stopwatch.png";
-import bookmark from "../../assets/navigation_icons/bookmark.png";
+// import timer from "../../assets/navigation_icons/timer.png";
+// import timer_fill from "../../assets/navigation_icons/timer_fill.png";
 
-import user_fill from "../../assets/navigation_icons/user_fill.png";
-import settings_fill from "../../assets/navigation_icons/settings_fill.png";
+import stopwatch from "../../assets/navigation_icons/stopwatch.png";
 import stopwatch_fill from "../../assets/navigation_icons/stopwatch_fill.png";
+
+import bookmark from "../../assets/navigation_icons/bookmark.png";
 import bookmark_fill from "../../assets/navigation_icons/bookmark_fill.png";
+
+import settings from "../../assets/navigation_icons/settings.png";
+import settings_fill from "../../assets/navigation_icons/settings_fill.png";
+
+import user from "../../assets/navigation_icons/user.png";
+import user_fill from "../../assets/navigation_icons/user_fill.png";
 
 import { themes } from "../themes/themes";
 const theme = themes.default; // Change this to select a different theme
@@ -57,6 +63,7 @@ const NavigationTabs = () => {
         ],
       }}
     >
+      {/* Stopwatch */}
       <Tab.Screen
         name="Stopwatch"
         component={Test}
@@ -99,6 +106,50 @@ const NavigationTabs = () => {
         }}
       ></Tab.Screen>
 
+      {/* Timer */}
+      {/* <Tab.Screen
+        name="Timer"
+        component={Timer}
+        options={{
+          tabBarIcon: ({ focused }) => (
+            <View>
+              <View
+                style={{
+                  backgroundColor: focused
+                    ? theme.buttonLight
+                    : theme.secondaryBackgroundColor,
+                  ...styles.navButtonCircle,
+                }}
+              >
+                <Image
+                  source={focused ? timer_fill : timer}
+                  resizeMode="contain"
+                  style={{
+                    width: 20,
+                    height: 20,
+                    tintColor: focused
+                      ? theme.activeButtonColor
+                      : theme.deactiveButtonColor,
+                    alignSelf: "center",
+                  }}
+                ></Image>
+              </View>
+              <Text
+                style={{
+                  color: focused
+                    ? theme.activeButtonColor
+                    : theme.deactiveButtonColor,
+                  ...styles.navButtonText,
+                }}
+              >
+                Timer
+              </Text>
+            </View>
+          ),
+        }}
+      ></Tab.Screen> */}
+
+      {/* Saved */}
       <Tab.Screen
         name="Saved"
         component={Saved}
@@ -141,6 +192,7 @@ const NavigationTabs = () => {
         }}
       ></Tab.Screen>
 
+      {/* Settings */}
       <Tab.Screen
         name="Settings"
         component={Settings}
@@ -183,6 +235,7 @@ const NavigationTabs = () => {
         }}
       ></Tab.Screen>
 
+      {/* Profile */}
       <Tab.Screen
         name="Profile"
         component={Profile}
