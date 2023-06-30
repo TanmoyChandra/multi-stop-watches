@@ -24,9 +24,14 @@ const Tab = createMaterialBottomTabNavigator();
 function NavigationTabs() {
   return (
     <Tab.Navigator
+      activeColor={theme.accentColor}
+      inactiveColor={theme.deactiveButtonColor}
       shifting={false}
       sceneAnimationEnabled={true}
-      barStyle={{ backgroundColor: theme.secondaryBackgroundColor }}
+      barStyle={{
+        backgroundColor: theme.secondaryBackgroundColor,
+        fontWeight: "bold",
+      }}
     >
       <Tab.Screen
         name="Stopwatch"
