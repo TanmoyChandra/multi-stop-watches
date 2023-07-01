@@ -13,6 +13,9 @@ import { getFirestore, collection, addDoc } from "firebase/firestore";
 import { ActivityIndicator, Colors } from "react-native-paper";
 import LoginRegistration from "../login/loginRegistration";
 
+import { themes } from "../../../themes/themes";
+const theme = themes.default;
+
 const auth = getAuth();
 const db = getFirestore();
 
@@ -139,7 +142,12 @@ const Authentication = () => {
   if (isLoading) {
     return (
       <View style={styles.loadingContainer}>
-        <ActivityIndicator animating={true} color="red" />
+        <ActivityIndicator
+          animating={true}
+          color={theme.accentColor}
+          size={50}
+          style={styles.loader}
+        />
       </View>
     );
   }
@@ -165,7 +173,12 @@ const Authentication = () => {
           />
           {isProcessing && (
             <View style={styles.loadingOverlay}>
-              <ActivityIndicator animating={true} color="white" />
+              <ActivityIndicator
+                animating={true}
+                color={theme.accentColor}
+                size={50}
+                style={styles.loader}
+              />
             </View>
           )}
         </View>
@@ -187,7 +200,7 @@ const styles = StyleSheet.create({
   },
   loadingOverlay: {
     ...StyleSheet.absoluteFill,
-    backgroundColor: "rgba(0, 0, 0, 0.6)",
+    backgroundColor: "rgba(255, 255, 255, 0.7)",
     justifyContent: "center",
     alignItems: "center",
   },
