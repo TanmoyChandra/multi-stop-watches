@@ -10,8 +10,10 @@ import {
   signInWithEmailAndPassword,
 } from "firebase/auth";
 import { getFirestore, collection, addDoc } from "firebase/firestore";
-import { ActivityIndicator, Colors } from "react-native-paper";
+import { ActivityIndicator, Colors, Button } from "react-native-paper";
 import LoginRegistration from "../login/loginRegistration";
+
+import { Dialog, Portal } from "react-native-paper";
 
 import { themes } from "../../../themes/themes";
 const theme = themes.default;
@@ -47,6 +49,11 @@ const Authentication = () => {
       setIsLoading(false);
     }
   };
+  // dialog
+  const [visible, setVisible] = React.useState(false);
+  const [dialogMsg, setDialogMsg] = React.useState(false);
+
+  const hideDialog = () => setVisible(false);
 
   const registerUser = async () => {
     setIsProcessing(true);
@@ -64,8 +71,16 @@ const Authentication = () => {
 
       // Save user login information to AsyncStorage
       saveUserLoginInfo(user);
+
+      //dialog show
+      setDialogMsg(
+        "You are registered successfully. Now you can login to your account."
+      );
+      setVisible(true);
+      setIsRegistering(false);
     } catch (error) {
-      console.error("Error registering user:", error);
+      setVisible(true);
+      setDialogMsg(error.toString());
     } finally {
       setIsProcessing(false);
     }
@@ -139,9 +154,9 @@ const Authentication = () => {
     }
   };
 
-  if (isLoading) {
+  if (isLoading || isProcessing) {
     return (
-      <View style={styles.loadingContainer}>
+      <View style={styles.loadingOverlay}>
         <ActivityIndicator
           animating={true}
           color={theme.accentColor}
@@ -162,7 +177,7 @@ const Authentication = () => {
             isRegistering={isRegistering}
             firstName={firstName}
             setFirstName={setFirstName}
-            lastName={lastName}
+            setLastName={setLastName}
             email={email}
             setEmail={setEmail}
             password={password}
@@ -183,6 +198,19 @@ const Authentication = () => {
           )}
         </View>
       )}
+      <Portal>
+        <Dialog visible={visible} onDismiss={hideDialog}>
+          <Dialog.Title style={styles.title}>Notification</Dialog.Title>
+          <Dialog.Content>
+            <Text variant="bodyMedium" style={styles.title}>
+              {dialogMsg}
+            </Text>
+          </Dialog.Content>
+          <Dialog.Actions>
+            <Button onPress={() => setVisible(false)}>OK</Button>
+          </Dialog.Actions>
+        </Dialog>
+      </Portal>
     </>
   );
 };
@@ -200,9 +228,14 @@ const styles = StyleSheet.create({
   },
   loadingOverlay: {
     ...StyleSheet.absoluteFill,
-    backgroundColor: "rgba(255, 255, 255, 0.7)",
+    // backgroundColor: "rgba(255, 255, 255, 0.7)",
     justifyContent: "center",
     alignItems: "center",
+  },
+  title: {
+    // fontWeight: "bold",
+    color: theme.textColor_dark,
+    textAlign: "center",
   },
 });
 
