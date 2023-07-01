@@ -1,6 +1,6 @@
 import * as React from "react";
 import { createMaterialBottomTabNavigator } from "react-native-paper/react-navigation";
-import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
+import { Image } from "react-native";
 
 import Test from "../components/pages/stopwatch/stopwatch";
 import Saved from "../components/pages/saved/saved";
@@ -15,6 +15,7 @@ import settings from "../../assets/navigation_icons/settings.png";
 import settings_fill from "../../assets/navigation_icons/settings_fill.png";
 import user from "../../assets/navigation_icons/user.png";
 import user_fill from "../../assets/navigation_icons/user_fill.png";
+import { NavigationContainer } from "@react-navigation/native";
 
 import { themes } from "../themes/themes";
 const theme = themes.default; // Change this to select a different theme
@@ -24,14 +25,18 @@ const Tab = createMaterialBottomTabNavigator();
 function NavigationTabs() {
   return (
     <Tab.Navigator
-      activeColor={theme.accentColor}
-      inactiveColor={theme.deactiveButtonColor}
-      shifting={false}
-      sceneAnimationEnabled={true}
-      barStyle={{
-        backgroundColor: theme.secondaryBackgroundColor,
-        fontWeight: "bold",
-      }}
+      screenOptions={{ headerShown: true }}
+      headerShown={true}
+      // activeColor={theme.accentColor}
+      // inactiveColor={theme.deactiveButtonColor}
+      // shifting={false}
+      // sceneAnimationEnabled={true}
+      // barStyle={
+      //   {
+      //     // backgroundColor: theme.secondaryBackgroundColor,
+      //     // fontWeight: "bold",
+      //   }
+      // }
     >
       <Tab.Screen
         name="Stopwatch"
@@ -57,7 +62,7 @@ function NavigationTabs() {
         name="Saved"
         component={Saved}
         options={{
-          tabBarIcon: ({ focused, color }) => (
+          tabBarIcon: ({ focused }) => (
             <Image
               source={focused ? bookmark_fill : bookmark}
               resizeMode="contain"
@@ -77,7 +82,7 @@ function NavigationTabs() {
         name="Settings"
         component={Settings}
         options={{
-          tabBarIcon: ({ focused, color }) => (
+          tabBarIcon: ({ focused }) => (
             <Image
               source={focused ? settings_fill : settings}
               resizeMode="contain"
@@ -97,7 +102,7 @@ function NavigationTabs() {
         name="Profile"
         component={Profile}
         options={{
-          tabBarIcon: ({ focused, color }) => (
+          tabBarIcon: ({ focused }) => (
             <Image
               source={focused ? user_fill : user}
               resizeMode="contain"
@@ -116,19 +121,5 @@ function NavigationTabs() {
     </Tab.Navigator>
   );
 }
-
-const styles = StyleSheet.create({
-  navButtonCircle: {
-    height: 30,
-    weight: 30,
-    borderRadius: 15,
-    paddingTop: 5,
-  },
-  navButtonText: {
-    width: 65,
-    textAlign: "center",
-    fontWeight: "600",
-  },
-});
 
 export default NavigationTabs;

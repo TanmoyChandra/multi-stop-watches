@@ -1,30 +1,36 @@
-import React, { useEffect, useState } from "react";
-import { StyleSheet, Text, View } from "react-native";
-import { NavigationContainer } from "@react-navigation/native";
+import React, { useEffect } from "react";
+import { StyleSheet, View } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import Authentication from "./src/components/pages/authentication/authentication";
-import { createMaterialBottomTabNavigator } from "react-native-paper/react-navigation";
+import { Provider } from "react-native-paper";
+import { NavigationContainer, DarkTheme } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { themes } from "./src/themes/themes";
 
-const theme = themes.default;
-const Tab = createMaterialBottomTabNavigator();
+const theme = {
+  ...DarkTheme,
+  colors: {
+    ...DarkTheme.colors,
+    secondaryContainer: "transparent", // Use transparent to disable the little highlighting oval
+  },
+};
+
+const Stack = createStackNavigator();
 
 export default function App() {
   useEffect(() => {}, []);
 
   return (
-    <SafeAreaProvider>
-      <NavigationContainer>
-        <Tab.Navigator
-          barStyle={{
-            display: "none",
-          }}
-        >
-          <Tab.Screen name="Authentication" component={Authentication} />
-        </Tab.Navigator>
-      </NavigationContainer>
-      <StatusBar backgroundColor={theme.statusBarColor} style="light" />
-    </SafeAreaProvider>
+    <Provider>
+      <SafeAreaProvider>
+        <NavigationContainer theme={DarkTheme} independent={true}>
+          <Stack.Navigator screenOptions={{ headerShown: false }}>
+            <Stack.Screen name="Authentication" component={Authentication} />
+          </Stack.Navigator>
+        </NavigationContainer>
+        <StatusBar style="dark" />
+      </SafeAreaProvider>
+    </Provider>
   );
 }

@@ -4,13 +4,13 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { NavigationContainer } from "@react-navigation/native";
 import NavigationTabs from "../../../navigation/tabs";
 import { doc, setDoc, getDoc } from "firebase/firestore";
-
 import {
   getAuth,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
 } from "firebase/auth";
 import { getFirestore, collection, addDoc } from "firebase/firestore";
+import { ActivityIndicator, Colors } from "react-native-paper";
 import LoginRegistration from "../login/loginRegistration";
 
 const auth = getAuth();
@@ -23,9 +23,9 @@ const Authentication = () => {
   const [lastName, setLastName] = useState("");
   const [isRegistering, setIsRegistering] = useState(true);
   const [loggedIn, setLoggedIn] = useState(false);
-
   const [isLoading, setIsLoading] = useState(true);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isProcessing, setIsProcessing] = useState(false);
 
   useEffect(() => {
     checkLoginStatus();
@@ -45,15 +45,8 @@ const Authentication = () => {
     }
   };
 
-  if (isLoading) {
-    return (
-      <View style={styles.loadingContainer}>
-        <Text>Loading...</Text>
-      </View>
-    );
-  }
-
   const registerUser = async () => {
+    setIsProcessing(true);
     try {
       const userCredential = await createUserWithEmailAndPassword(
         auth,
@@ -70,10 +63,13 @@ const Authentication = () => {
       saveUserLoginInfo(user);
     } catch (error) {
       console.error("Error registering user:", error);
+    } finally {
+      setIsProcessing(false);
     }
   };
 
   const loginUser = async () => {
+    setIsProcessing(true);
     try {
       const userCredential = await signInWithEmailAndPassword(
         auth,
@@ -100,6 +96,8 @@ const Authentication = () => {
       }
     } catch (error) {
       console.error("Error logging in user:", error);
+    } finally {
+      setIsProcessing(false);
     }
   };
 
@@ -138,6 +136,14 @@ const Authentication = () => {
     }
   };
 
+  if (isLoading) {
+    return (
+      <View style={styles.loadingContainer}>
+        <ActivityIndicator animating={true} color="red" />
+      </View>
+    );
+  }
+
   return (
     <>
       {isLoggedIn || loggedIn ? (
@@ -149,7 +155,6 @@ const Authentication = () => {
             firstName={firstName}
             setFirstName={setFirstName}
             lastName={lastName}
-            setLastName={setLastName}
             email={email}
             setEmail={setEmail}
             password={password}
@@ -158,6 +163,11 @@ const Authentication = () => {
             toggleText={isRegistering ? true : false}
             onTogglePress={() => setIsRegistering((prevValue) => !prevValue)}
           />
+          {isProcessing && (
+            <View style={styles.loadingOverlay}>
+              <ActivityIndicator animating={true} color="white" />
+            </View>
+          )}
         </View>
       )}
     </>
@@ -170,13 +180,14 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-  heading: {
-    fontSize: 24,
-    fontWeight: "bold",
-    marginBottom: 20,
-  },
   loadingContainer: {
     flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  loadingOverlay: {
+    ...StyleSheet.absoluteFill,
+    backgroundColor: "rgba(0, 0, 0, 0.6)",
     justifyContent: "center",
     alignItems: "center",
   },
