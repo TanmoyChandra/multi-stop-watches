@@ -7,23 +7,6 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { themes } from "./src/themes/themes";
 
-import {
-  Easing,
-  FlatList,
-  ScrollView,
-  StyleSheet,
-  useColorScheme,
-  View,
-} from "react-native";
-
-const theme = {
-  ...DefaultTheme,
-  colors: {
-    ...DefaultTheme.colors,
-    secondaryContainer: "transparent", // Use transparent to disable the little highlighting oval
-  },
-};
-
 const Stack = createStackNavigator();
 
 export default function App() {

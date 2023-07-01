@@ -87,7 +87,6 @@ function NavigationTabs() {
           barStyle={{
             backgroundColor: theme.secondaryBackgroundColor,
             fontWeight: "bold",
-            elevation: 8, // Add this elevation property to make the tab navigator elevated
           }}
         >
           <Tab.Screen

@@ -7,6 +7,7 @@ import {
   StyleSheet,
   ScrollView,
   Vibration,
+  SafeAreaView,
 } from "react-native";
 import { AppState } from "react-native";
 import { initializeApp } from "firebase/app";
@@ -23,6 +24,7 @@ import {
 } from "firebase/firestore/lite";
 import uuid from "react-native-uuid";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { AnimatedFAB } from "react-native-paper";
 
 import * as Device from "expo-device";
 import * as Notifications from "expo-notifications";
@@ -311,7 +313,10 @@ const Test = () => {
       .padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
   };
 
+  // const fabStyle = { [animateFrom]: 16 };
+
   return (
+    // <SafeAreaView>
     <View style={styles.background}>
       <ScrollView
         contentContainerStyle={styles.scrollContainer}
@@ -330,14 +335,20 @@ const Test = () => {
         ))}
       </ScrollView>
 
-      <TouchableOpacity
+      <AnimatedFAB
         style={styles.addButton}
+        icon={"plus"}
+        color={"white"}
+        label={"New Stopwatch"}
+        extended={false}
         onPress={addStopwatch}
-        activeOpacity={0.8}
-      >
-        <Image source={addIcon} style={styles.ClockIcon} />
-      </TouchableOpacity>
+        visible={true}
+        animateFrom={"right"}
+        iconMode={"dynamic"}
+        // style={[styles.fabStyle, style, fabStyle]}
+      />
     </View>
+    // </SafeAreaView>
   );
 };
 
@@ -369,22 +380,22 @@ const styles = StyleSheet.create({
   },
   addButton: {
     position: "absolute",
-    bottom: 100,
+    bottom: 30,
     right: 20,
-    backgroundColor: theme.buttonColorPrimary,
-    borderRadius: 20,
-    width: 60,
-    height: 60,
-    justifyContent: "center",
-    alignItems: "center",
-    shadowColor: "#6587FF",
-    shadowOffset: {
-      width: 5,
-      height: 2,
-    },
-    shadowOpacity: 1,
-    shadowRadius: 3.84,
-    elevation: 5,
+    backgroundColor: theme.accentColor,
+    // borderRadius: 20,
+    // width: 60,
+    // height: 60,
+    // justifyContent: "center",
+    // alignItems: "center",
+    // shadowColor: "#6587FF",
+    // shadowOffset: {
+    //   width: 5,
+    //   height: 2,
+    // },
+    // shadowOpacity: 1,
+    // shadowRadius: 3.84,
+    // elevation: 5,
   },
 });
 
