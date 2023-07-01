@@ -1,8 +1,9 @@
 import React, { useEffect, useState, useRef } from "react";
-import { View, StyleSheet, ScrollView, Vibration } from "react-native";
+import { View, StyleSheet, ScrollView, Vibration, Text } from "react-native";
 import { AppState } from "react-native";
 import { initializeApp } from "firebase/app";
 import StopwatchView from "./stopwatchCard/stopwatchCard";
+import { ActivityIndicator, MD2Colors } from "react-native-paper";
 import {
   getFirestore,
   collection,
@@ -42,6 +43,9 @@ const BACKGROUND_TASK_NAME = "printTask";
 const Test = () => {
   const [stopwatches, setStopwatches] = useState([]);
   const [userId, setUserId] = useState("");
+
+  // loading
+  const [isLoading, setIsLoading] = useState(true);
 
   // notification related
   const [expoPushToken, setExpoPushToken] = useState("");
@@ -120,6 +124,7 @@ const Test = () => {
         const querySnapshot = await getDocs(userStopwatchCollection);
         const fetchedStopwatches = querySnapshot.docs.map((doc) => doc.data());
         setStopwatches(fetchedStopwatches.map(startStopwatchLocally));
+        setIsLoading(false);
       } catch (error) {
         console.error("Error fetching stopwatches:", error);
       }
@@ -307,37 +312,49 @@ const Test = () => {
 
   return (
     <>
-      <View style={styles.background}>
-        <ScrollView
-          contentContainerStyle={styles.scrollContainer}
-          showsVerticalScrollIndicator={false}
-        >
-          {stopwatches.map((stopwatch) => (
-            <StopwatchView
-              key={stopwatch.id}
-              id={stopwatch.id}
-              name={stopwatch.name}
-              time={formatElapsedTime(stopwatch.elapsedSeconds)}
-              onStop={() => {}}
-              onDelete={() => deleteStopwatch(stopwatch.id)}
-              onRename={renameStopwatch}
+      {isLoading ? (
+        <>
+          <View style={styles.background}>
+            <ActivityIndicator
+              animating={true}
+              color={theme.accentColor}
+              size={50}
+              style={styles.loader}
             />
-          ))}
-        </ScrollView>
+          </View>
+        </>
+      ) : (
+        <View style={styles.background}>
+          <ScrollView
+            contentContainerStyle={styles.scrollContainer}
+            showsVerticalScrollIndicator={false}
+          >
+            {stopwatches.map((stopwatch) => (
+              <StopwatchView
+                key={stopwatch.id}
+                id={stopwatch.id}
+                name={stopwatch.name}
+                time={formatElapsedTime(stopwatch.elapsedSeconds)}
+                onStop={() => {}}
+                onDelete={() => deleteStopwatch(stopwatch.id)}
+                onRename={renameStopwatch}
+              />
+            ))}
+          </ScrollView>
 
-        <AnimatedFAB
-          style={styles.addButton}
-          icon={"plus"}
-          color={"white"}
-          label={"New Stopwatch"}
-          extended={false}
-          onPress={addStopwatch}
-          visible={true}
-          animateFrom={"right"}
-          iconMode={"dynamic"}
-          // style={[styles.fabStyle, style, fabStyle]}
-        />
-      </View>
+          <AnimatedFAB
+            style={styles.addButton}
+            icon={"plus"}
+            color={"white"}
+            label={"New Stopwatch"}
+            extended={false}
+            onPress={addStopwatch}
+            visible={true}
+            animateFrom={"right"}
+            iconMode={"dynamic"}
+          />
+        </View>
+      )}
     </>
   );
 };
@@ -364,6 +381,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
     position: "relative",
   },
+  loader: {
+    marginTop: "70%",
+  },
   ClockIcon: {
     height: 23,
     width: 23,
@@ -373,19 +393,6 @@ const styles = StyleSheet.create({
     bottom: 30,
     right: 20,
     backgroundColor: theme.accentColor,
-    // borderRadius: 20,
-    // width: 60,
-    // height: 60,
-    // justifyContent: "center",
-    // alignItems: "center",
-    // shadowColor: "#6587FF",
-    // shadowOffset: {
-    //   width: 5,
-    //   height: 2,
-    // },
-    // shadowOpacity: 1,
-    // shadowRadius: 3.84,
-    // elevation: 5,
   },
 });
 

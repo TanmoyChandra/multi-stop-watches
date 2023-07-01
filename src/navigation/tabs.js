@@ -60,10 +60,11 @@ function NavigationTabs() {
         <Appbar.Content
           title={"ChronoSync"}
           titleStyle={{
+            alignSelf: "center",
             fontSize: 30,
             marginTop: -10,
             paddingTop: 30,
-            paddingLeft: 10,
+            // paddingLeft: 10,
             fontFamily: "MuseoModerno-ExtraBold",
             color: "white",
           }}
@@ -143,6 +144,7 @@ function NavigationTabs() {
         <Tab.Screen
           name="Profile"
           component={Profile}
+          fontFamily={"MuseoModerno-Bold"}
           options={{
             tabBarIcon: ({ focused }) => (
               <Image
