@@ -10,11 +10,16 @@ import * as Font from "expo-font";
 import { Card, Text, Button } from "react-native-paper";
 import { initializeApp } from "firebase/app";
 import { IconButton, MD3Colors } from "react-native-paper";
+import { Dialog, Portal } from "react-native-paper";
 import { themes } from "../../../themes/themes";
 const theme = themes.default; // Change this to select a different theme
 
 const Saved = () => {
   const [fontsLoaded, setFontsLoaded] = useState(false);
+
+  // dialog
+  const [visible, setVisible] = React.useState(false);
+  const hideDialog = () => setVisible(false);
 
   useEffect(() => {
     const loadFonts = async () => {
@@ -130,7 +135,7 @@ const Saved = () => {
     <View style={styles.container}>
       <ScrollView style={styles.scrollView}>
         <View style={styles.cardContainer}>
-          {data.map((card) => {
+          {data.map((card, index) => {
             const date = new Date(card.timestamp);
 
             const options = {
@@ -145,7 +150,7 @@ const Saved = () => {
             const formattedDateTime = date.toLocaleDateString("en-US", options);
 
             return (
-              <Card style={styles.cardStyle} id={card.id}>
+              <Card style={styles.cardStyle} key={index}>
                 <Card.Content>
                   <Text variant="titleMedium" style={styles.stopWatchHeading}>
                     {card.name}
@@ -162,7 +167,14 @@ const Saved = () => {
                     <Text style={styles.shareText}>Share</Text>
                   </View>
                   <View style={styles.cardDelete}>
-                    <Text style={styles.deleteText}>Delete</Text>
+                    <Text
+                      style={styles.deleteText}
+                      onPress={() => {
+                        setVisible(true);
+                      }}
+                    >
+                      Delete
+                    </Text>
                   </View>
                 </Card.Actions>
               </Card>
@@ -170,6 +182,20 @@ const Saved = () => {
           })}
         </View>
       </ScrollView>
+      <Portal>
+        <Dialog visible={visible} onDismiss={hideDialog}>
+          <Dialog.Title style={styles.title}>Delete</Dialog.Title>
+          <Dialog.Content>
+            <Text variant="bodyMedium" style={styles.title}>
+              Do you really want to delete this saved stopwatch time?
+            </Text>
+          </Dialog.Content>
+          <Dialog.Actions>
+            <Button onPress={() => setVisible(false)}>Cancel</Button>
+            <Button onPress={() => setVisible(false)}>Delete</Button>
+          </Dialog.Actions>
+        </Dialog>
+      </Portal>
     </View>
   );
 };
@@ -234,6 +260,11 @@ const styles = StyleSheet.create({
     fontSize: 13,
     fontFamily: "PlusJakartaSans-Regular",
     color: theme.buttonColorDanger,
+  },
+  title: {
+    // fontWeight: "bold",
+    color: theme.textColor_dark,
+    textAlign: "center",
   },
 });
 

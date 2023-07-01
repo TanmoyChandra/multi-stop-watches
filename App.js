@@ -15,19 +15,19 @@ export default function App() {
   useEffect(() => {}, []);
 
   return (
-    // <PaperProvider>
-    <SafeAreaProvider>
-      <NavigationContainer>
-        <Tab.Navigator
-          barStyle={{
-            display: "none",
-          }}
-        >
-          <Tab.Screen name="Authentication" component={Authentication} />
-        </Tab.Navigator>
-      </NavigationContainer>
-      <StatusBar backgroundColor={theme.statusBarColor} style="light" />
-    </SafeAreaProvider>
-    // </PaperProvider>
+    <PaperProvider>
+      <SafeAreaProvider>
+        <NavigationContainer>
+          <Tab.Navigator
+            barStyle={{
+              display: "none",
+            }}
+          >
+            <Tab.Screen name="Authentication" component={Authentication} />
+          </Tab.Navigator>
+        </NavigationContainer>
+        <StatusBar backgroundColor={theme.statusBarColor} style="light" />
+      </SafeAreaProvider>
+    </PaperProvider>
   );
 }
