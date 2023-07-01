@@ -1,18 +1,8 @@
 import React, { useEffect, useState, useRef } from "react";
-import {
-  View,
-  Image,
-  Text,
-  TouchableOpacity,
-  StyleSheet,
-  ScrollView,
-  Vibration,
-  SafeAreaView,
-} from "react-native";
+import { View, StyleSheet, ScrollView, Vibration } from "react-native";
 import { AppState } from "react-native";
 import { initializeApp } from "firebase/app";
 import StopwatchView from "./stopwatchCard/stopwatchCard";
-import addIcon from "../../../../assets/add.png";
 import {
   getFirestore,
   collection,
@@ -316,39 +306,39 @@ const Test = () => {
   // const fabStyle = { [animateFrom]: 16 };
 
   return (
-    // <SafeAreaView>
-    <View style={styles.background}>
-      <ScrollView
-        contentContainerStyle={styles.scrollContainer}
-        showsVerticalScrollIndicator={false}
-      >
-        {stopwatches.map((stopwatch) => (
-          <StopwatchView
-            key={stopwatch.id}
-            id={stopwatch.id}
-            name={stopwatch.name}
-            time={formatElapsedTime(stopwatch.elapsedSeconds)}
-            onStop={() => {}}
-            onDelete={() => deleteStopwatch(stopwatch.id)}
-            onRename={renameStopwatch}
-          />
-        ))}
-      </ScrollView>
+    <>
+      <View style={styles.background}>
+        <ScrollView
+          contentContainerStyle={styles.scrollContainer}
+          showsVerticalScrollIndicator={false}
+        >
+          {stopwatches.map((stopwatch) => (
+            <StopwatchView
+              key={stopwatch.id}
+              id={stopwatch.id}
+              name={stopwatch.name}
+              time={formatElapsedTime(stopwatch.elapsedSeconds)}
+              onStop={() => {}}
+              onDelete={() => deleteStopwatch(stopwatch.id)}
+              onRename={renameStopwatch}
+            />
+          ))}
+        </ScrollView>
 
-      <AnimatedFAB
-        style={styles.addButton}
-        icon={"plus"}
-        color={"white"}
-        label={"New Stopwatch"}
-        extended={false}
-        onPress={addStopwatch}
-        visible={true}
-        animateFrom={"right"}
-        iconMode={"dynamic"}
-        // style={[styles.fabStyle, style, fabStyle]}
-      />
-    </View>
-    // </SafeAreaView>
+        <AnimatedFAB
+          style={styles.addButton}
+          icon={"plus"}
+          color={"white"}
+          label={"New Stopwatch"}
+          extended={false}
+          onPress={addStopwatch}
+          visible={true}
+          animateFrom={"right"}
+          iconMode={"dynamic"}
+          // style={[styles.fabStyle, style, fabStyle]}
+        />
+      </View>
+    </>
   );
 };
 

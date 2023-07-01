@@ -1,27 +1,33 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import { StyleSheet, Text, View } from "react-native";
+import { NavigationContainer } from "@react-navigation/native";
 import { StatusBar } from "expo-status-bar";
 import Authentication from "./src/components/pages/authentication/authentication";
-import { Provider } from "react-native-paper";
-import { NavigationContainer, DefaultTheme } from "@react-navigation/native";
-import { createStackNavigator } from "@react-navigation/stack";
+import { createMaterialBottomTabNavigator } from "react-native-paper/react-navigation";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { themes } from "./src/themes/themes";
+import { Provider as PaperProvider } from "react-native-paper";
 
-const Stack = createStackNavigator();
+const theme = themes.default;
+const Tab = createMaterialBottomTabNavigator();
 
 export default function App() {
   useEffect(() => {}, []);
 
   return (
-    <Provider>
-      <SafeAreaProvider>
-        <NavigationContainer theme={DefaultTheme}>
-          <Stack.Navigator screenOptions={{ headerShown: false }}>
-            <Stack.Screen name="Authentication" component={Authentication} />
-          </Stack.Navigator>
-        </NavigationContainer>
-        <StatusBar style="light" />
-      </SafeAreaProvider>
-    </Provider>
+    // <PaperProvider>
+    <SafeAreaProvider>
+      <NavigationContainer>
+        <Tab.Navigator
+          barStyle={{
+            display: "none",
+          }}
+        >
+          <Tab.Screen name="Authentication" component={Authentication} />
+        </Tab.Navigator>
+      </NavigationContainer>
+      <StatusBar backgroundColor={theme.statusBarColor} style="light" />
+    </SafeAreaProvider>
+    // </PaperProvider>
   );
 }
