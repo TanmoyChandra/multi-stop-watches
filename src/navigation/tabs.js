@@ -1,6 +1,7 @@
-import * as React from "react";
+import React, { useEffect, useState } from "react";
 import { createMaterialBottomTabNavigator } from "react-native-paper/react-navigation";
 import { Image } from "react-native";
+import * as Font from "expo-font";
 import {
   Appbar,
   BottomNavigation,
@@ -28,23 +29,57 @@ import user from "../../assets/navigation_icons/user.png";
 import user_fill from "../../assets/navigation_icons/user_fill.png";
 import { NavigationContainer } from "@react-navigation/native";
 
-import { colorThemes, teamResultsData } from "../../utils";
-
 import { themes } from "../themes/themes";
 const theme = themes.default; // Change this to select a different theme
 
 const Tab = createMaterialBottomTabNavigator();
 
 function NavigationTabs() {
+  const [fontsLoaded, setFontsLoaded] = useState(false);
+
+  useEffect(() => {
+    const loadFonts = async () => {
+      await Font.loadAsync({
+        "MuseoModerno-ExtraBold": require("../../assets/fonts/MuseoModerno-ExtraBold.ttf"),
+        "MuseoModerno-Bold": require("../../assets/fonts/MuseoModerno-Bold.ttf"),
+
+        "PlusJakartaSans-Medium": require("../../assets/fonts/plus_jakarta_sans/PlusJakartaSans-Medium.ttf"),
+        "PlusJakartaSans-Bold": require("../../assets/fonts/plus_jakarta_sans/PlusJakartaSans-Bold.ttf"),
+      });
+      setFontsLoaded(true);
+    };
+
+    loadFonts();
+  }, []);
+
+  if (!fontsLoaded) {
+    return null; // or a loading spinner
+  }
+
   return (
     <>
-      <PaperProvider theme={colorThemes}>
-        <Appbar.Header elevated>
-          <Appbar.Content title={"ChronoSync"} />
+      <PaperProvider>
+        <Appbar.Header
+          style={{
+            backgroundColor: theme.accentColor,
+            borderRadius: 25,
+            height: 90,
+          }}
+        >
+          <Appbar.Content
+            title={"ChronoSync"}
+            titleStyle={{
+              fontSize: 30,
+              marginTop: -10,
+              paddingTop: 30,
+              paddingLeft: 10,
+              fontFamily: "MuseoModerno-ExtraBold",
+              color: "white",
+            }}
+          />
         </Appbar.Header>
+
         <Tab.Navigator
-          screenOptions={{ headerShown: true }}
-          headerShown={true}
           activeColor={theme.accentColor}
           inactiveColor={theme.deactiveButtonColor}
           shifting={false}
@@ -52,6 +87,7 @@ function NavigationTabs() {
           barStyle={{
             backgroundColor: theme.secondaryBackgroundColor,
             fontWeight: "bold",
+            elevation: 8, // Add this elevation property to make the tab navigator elevated
           }}
         >
           <Tab.Screen
