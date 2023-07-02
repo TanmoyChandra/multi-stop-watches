@@ -2,13 +2,16 @@ import React, { useEffect, useState } from "react";
 import {
   View,
   Image,
-  Text,
   TouchableOpacity,
   StyleSheet,
   Dimensions,
   TextInput,
   Modal,
 } from "react-native";
+
+import { Card, Text, Button } from "react-native-paper";
+import { SwipeRow } from "react-native-swipe-list-view";
+
 import * as Font from "expo-font";
 import EditIcon from "../../../../../assets/card_icons/pencil.png";
 import DeleteIcon from "../../../../../assets/card_icons/stop.png";
@@ -53,7 +56,12 @@ const StopwatchView = ({ id, name, time, onDelete, onRename }) => {
   }
   return (
     <>
-      <View style={styles.cardOptions}>
+      <SwipeRow leftOpenValue={75} rightOpenValue={-75}>
+        <View style={styles.cardBackOptions}>
+          <Text style={styles.backTextWhite}>Left</Text>
+          <Text style={styles.backTextWhite}>Right</Text>
+        </View>
+
         <View style={styles.card}>
           <View style={styles.columnContainer_2}>
             <View style={styles.rowContainer}>
@@ -79,32 +87,9 @@ const StopwatchView = ({ id, name, time, onDelete, onRename }) => {
             </TouchableOpacity>
           </View>
         </View>
+      </SwipeRow>
 
-        <View style={styles.belowButtonsArea}>
-          <TouchableOpacity>
-            <View style={styles.belowButtonOuterBox}>
-              <Image source={PauseIcon} style={styles.BelowButtonIconUI} />
-            </View>
-          </TouchableOpacity>
-
-          <TouchableOpacity>
-            <View style={styles.belowButtonOuterBox}>
-              <Image source={SaveIcon} style={styles.BelowButtonIconUI} />
-            </View>
-          </TouchableOpacity>
-
-          <TouchableOpacity>
-            <View style={styles.belowButtonOuterBox}>
-              <Image
-                source={SmallDeleteIcon}
-                style={styles.BelowButtonIconUI}
-              />
-            </View>
-          </TouchableOpacity>
-        </View>
-      </View>
-
-      {/* Rename Modal */}
+      {/* Modal */}
       <Modal animationType="fade" transparent visible={modalVisible}>
         <View style={styles.modalContainer}>
           <View style={styles.modalContent}>
@@ -138,17 +123,16 @@ const StopwatchView = ({ id, name, time, onDelete, onRename }) => {
 const styles = StyleSheet.create({
   card: {
     backgroundColor: theme.secondaryBackgroundColor,
-    borderRadius: 25,
-    borderBottomEndRadius: 0,
+    borderRadius: 18,
+    // borderBottomEndRadius: 0,
     padding: 16,
-
-    // marginTop: -30,
-
     height: 85,
     width: cardWidth,
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
+
+    marginTop: 20,
   },
 
   cardOptions: {
@@ -307,6 +291,25 @@ const styles = StyleSheet.create({
   cancelButtonText: {
     color: "blue",
     fontWeight: "bold",
+  },
+
+  // new ui
+  cardBackOptions: {
+    borderRadius: 18,
+    height: 85,
+    alignItems: "center",
+    backgroundColor: "#8BC645",
+    flex: 1,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    padding: 15,
+    marginTop: 20,
+  },
+  backTextWhite: {
+    color: "#FFF",
+  },
+  spacer: {
+    height: 85,
   },
 });
 
