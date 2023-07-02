@@ -70,7 +70,7 @@ const StopwatchView = ({ id, name, time, onDelete, onRename }) => {
           ]}
           style={styles.cardBackOptions}
         >
-          <TouchableOpacity style={styles.backTextWhite} onPress={onDelete}>
+          <TouchableOpacity onPress={onDelete}>
             <Image source={SaveIcon} style={styles.SaveIcon} />
           </TouchableOpacity>
 
@@ -82,7 +82,12 @@ const StopwatchView = ({ id, name, time, onDelete, onRename }) => {
         <View style={styles.card}>
           <View style={styles.columnContainer_2}>
             <View style={styles.rowContainer}>
-              <Text style={styles.name}>{name}</Text>
+              <TouchableOpacity onPress={() => setModalVisible(true)}>
+                <View style={styles.rowContainer}>
+                  <Text style={styles.name}>{name}</Text>
+                  <Image source={EditIcon} style={styles.EditIcon} />
+                </View>
+              </TouchableOpacity>
             </View>
             <View style={styles.rowContainer}>
               <Text style={styles.elapsedTime}>{time}</Text>
@@ -90,11 +95,9 @@ const StopwatchView = ({ id, name, time, onDelete, onRename }) => {
           </View>
 
           <View style={styles.columnContainer_3}>
-            <TouchableOpacity onPress={() => setModalVisible(true)}>
-              <View style={styles.addButton}>
-                <Image source={EditIcon} style={styles.EditIcon} />
-              </View>
-            </TouchableOpacity>
+            <View style={styles.addButton}>
+              <Image source={EditIcon} style={styles.EditIcon} />
+            </View>
           </View>
           <View style={styles.columnContainer_4}>
             <TouchableOpacity onPress={onDelete}>
@@ -138,23 +141,6 @@ const StopwatchView = ({ id, name, time, onDelete, onRename }) => {
 };
 
 const styles = StyleSheet.create({
-  cardOptions: {
-    height: 105,
-    width: cardWidth,
-
-    flexDirection: "column",
-    // backgroundColor: "#f2f2f2",
-    borderRadius: 0,
-    padding: 0,
-
-    borderRadius: 25,
-    marginTop: 25,
-    marginBottom: 25,
-
-    justifyContent: "space-between",
-    alignItems: "center",
-  },
-
   addButton: {
     backgroundColor: theme.buttonLight,
     borderRadius: 10,
@@ -164,22 +150,15 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
 
-  deleteButton: {
-    backgroundColor: theme.dangerLight,
-    borderRadius: 10,
-    width: 40,
-    height: 40,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-
   EditIcon: {
-    width: 18,
-    height: 18,
-    marginLeft: -2,
+    width: 13,
+    height: 13,
+    marginTop: 1,
+    marginLeft: -8,
     resizeMode: "contain",
     tintColor: theme.accentColor,
   },
+
   DeleteIcon: {
     width: 26,
     height: 26,
@@ -222,12 +201,6 @@ const styles = StyleSheet.create({
     fontSize: 28,
     color: theme.textColor_dark,
     fontFamily: "MuseoModerno-Bold",
-  },
-  deleteButton: {
-    marginLeft: "auto",
-  },
-  renameButton: {
-    marginLeft: 10,
   },
   modalContainer: {
     flex: 1,
@@ -284,7 +257,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-
     marginTop: 20,
   },
 
@@ -298,12 +270,6 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     padding: 15,
     marginTop: 20,
-  },
-  backTextWhite: {
-    color: "#FFF",
-  },
-  spacer: {
-    height: 85,
   },
 });
 
