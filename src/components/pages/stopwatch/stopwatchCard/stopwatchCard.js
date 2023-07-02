@@ -138,20 +138,6 @@ const StopwatchView = ({ id, name, time, onDelete, onRename }) => {
 };
 
 const styles = StyleSheet.create({
-  card: {
-    backgroundColor: theme.secondaryBackgroundColor,
-    borderRadius: 18,
-    // borderBottomEndRadius: 0,
-    padding: 16,
-    height: 85,
-    width: cardWidth,
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-
-    marginTop: 20,
-  },
-
   cardOptions: {
     height: 105,
     width: cardWidth,
@@ -167,36 +153,6 @@ const styles = StyleSheet.create({
 
     justifyContent: "space-between",
     alignItems: "center",
-  },
-
-  belowButtonsArea: {
-    height: 40,
-    width: 150,
-    backgroundColor: theme.secondaryBackgroundColor,
-    alignSelf: "flex-end",
-    flexDirection: "row",
-    justifyContent: "space-between",
-    borderBottomEndRadius: 25,
-    borderBottomLeftRadius: 25,
-    paddingStart: 10,
-    paddingEnd: 10,
-  },
-
-  belowButtonOuterBox: {
-    backgroundColor: theme.buttonLight,
-    // marginTop: 100,
-    borderRadius: 10,
-    width: 30,
-    height: 30,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-
-  BelowButtonIconUI: {
-    width: 17,
-    height: 17,
-    resizeMode: "contain",
-    tintColor: "#8c8c8c",
   },
 
   addButton: {
@@ -318,9 +274,23 @@ const styles = StyleSheet.create({
   },
 
   // new ui
+  card: {
+    backgroundColor: theme.secondaryBackgroundColor,
+    borderRadius: 25,
+    paddingLeft: 30,
+    paddingRight: 30,
+    height: 110,
+    width: cardWidth,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+
+    marginTop: 20,
+  },
+
   cardBackOptions: {
-    borderRadius: 18,
-    height: 85,
+    borderRadius: 25,
+    height: 110,
     alignItems: "center",
     backgroundColor: "#8BC645",
     flex: 1,
