@@ -24,6 +24,8 @@ import PauseIcon from "../../../../../assets/card_below_icons/pause.png";
 import SaveIcon from "../../../../../assets/card_below_icons/bookmark.png";
 import DeleteIcon from "../../../../../assets/card_below_icons/trash.png";
 
+import StopIcon from "../../../../../assets/card_icons/stop.png";
+
 import { themes } from "../../../../themes/themes";
 const theme = themes.default; // Change this to select a different theme
 
@@ -94,15 +96,19 @@ const StopwatchView = ({ id, name, time, onDelete, onRename }) => {
             </View>
           </View>
 
+          {/* Edit Button */}
           <View style={styles.columnContainer_3}>
-            <View style={styles.addButton}>
-              <Image source={EditIcon} style={styles.EditIcon} />
-            </View>
+            <TouchableOpacity>
+              <View style={styles.blueButton}>
+                <Image source={PauseIcon} style={styles.PauseIcon} />
+              </View>
+            </TouchableOpacity>
           </View>
+          {/* Stop Button */}
           <View style={styles.columnContainer_4}>
-            <TouchableOpacity onPress={onDelete}>
-              <View style={styles.addButton}>
-                <Image source={DeleteIcon} style={styles.DeleteIcon} />
+            <TouchableOpacity>
+              <View style={styles.redButton}>
+                <Image source={StopIcon} style={styles.StopIcon} />
               </View>
             </TouchableOpacity>
           </View>
@@ -141,22 +147,43 @@ const StopwatchView = ({ id, name, time, onDelete, onRename }) => {
 };
 
 const styles = StyleSheet.create({
-  addButton: {
-    backgroundColor: theme.buttonLight,
+  blueButton: {
+    backgroundColor: theme.whiteish_blue,
     borderRadius: 10,
     width: 40,
     height: 40,
     justifyContent: "center",
     alignItems: "center",
   },
+  redButton: {
+    backgroundColor: theme.whiteish_red,
+    borderRadius: 10,
+    width: 40,
+    height: 40,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  PauseIcon: {
+    width: 15,
+    height: 15,
+    resizeMode: "contain",
+    tintColor: theme.buttonColorPrimary,
+  },
+
+  StopIcon: {
+    width: 15,
+    height: 15,
+    resizeMode: "contain",
+    tintColor: theme.buttonColorDanger,
+  },
 
   EditIcon: {
     width: 13,
     height: 13,
     marginTop: 1,
-    marginLeft: -8,
+    marginLeft: -10,
     resizeMode: "contain",
-    tintColor: theme.accentColor,
+    tintColor: theme.textColor_light,
   },
 
   DeleteIcon: {
