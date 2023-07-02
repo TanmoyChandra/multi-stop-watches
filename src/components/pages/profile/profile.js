@@ -1,7 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import {
+  View,
+  TouchableOpacity,
+  StyleSheet,
+  flexDirection,
+} from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
+import * as Font from "expo-font";
+import { Card, Text, Button, Avatar } from "react-native-paper";
 
 import { themes } from "../../../themes/themes";
 const theme = themes.default; // Change this to select a different theme
@@ -9,10 +16,23 @@ const theme = themes.default; // Change this to select a different theme
 const Profile = () => {
   const navigation = useNavigation();
   const [userDetails, setUserDetails] = useState(null);
+  const [fontsLoaded, setFontsLoaded] = useState(false);
 
   useEffect(() => {
     // Fetch user details from AsyncStorage
     getUserDetails();
+  }, []);
+
+  useEffect(() => {
+    const loadFonts = async () => {
+      await Font.loadAsync({
+        "PlusJakartaSans-Regular": require("../../../../assets/fonts/plus_jakarta_sans/PlusJakartaSans-Bold.ttf"),
+        "MuseoModerno-Bold": require("../../../../assets/fonts/MuseoModerno-Bold.ttf"),
+      });
+      setFontsLoaded(true);
+    };
+
+    loadFonts();
   }, []);
 
   // Function to get user details from AsyncStorage
@@ -44,19 +64,34 @@ const Profile = () => {
     }
   };
 
+  if (!fontsLoaded) {
+    return (
+      <>
+        <Text>Loading..</Text>
+      </>
+    );
+  }
+
   return (
     <View style={styles.container}>
       <View style={styles.background}>
         {userDetails && (
-          <>
-            <Text style={styles.label}>
-              Name: {userDetails.firstName} {userDetails.lastName}
-            </Text>
-            <Text style={styles.label}>Email: {userDetails.email}</Text>
-          </>
+          <Card style={styles.profileCard}>
+            <View style={styles.rowContainer}>
+              <View style={styles.avatarContainer}>
+                <Avatar.Text size={55} label="XD" />
+              </View>
+              <View style={styles.detailsContainer}>
+                <Text style={styles.fullName}>
+                  {userDetails.firstName} {userDetails.lastName}
+                </Text>
+                <Text style={styles.email}>{userDetails.email}</Text>
+              </View>
+            </View>
+          </Card>
         )}
-        <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
-          <Text style={styles.logoutButtonText}>Logout</Text>
+        <TouchableOpacity style={styles.customButton} onPress={handleLogout}>
+          <Text style={styles.customButtonText}>Logout</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -65,31 +100,56 @@ const Profile = () => {
 
 const styles = StyleSheet.create({
   container: {
-    paddingTop: 50,
     backgroundColor: theme.primaryBackgroundColor,
     height: "100%",
     width: "100%",
   },
   background: {
     flex: 1,
+  },
+  profileCard: {
+    padding: 15,
+    margin: 15,
+    width: "87%",
+    alignSelf: "center",
+    borderRadius: 25,
+    backgroundColor: "white",
+  },
+  rowContainer: {
+    flexDirection: "row", // Align the avatar and details horizontally
+  },
+  avatarContainer: {
+    marginTop: 3,
+    marginRight: 10,
+  },
+  detailsContainer: {
+    flex: 1, // Take remaining space in the row
+  },
+  fullName: {
+    fontFamily: "PlusJakartaSans-Regular",
+    fontSize: 25,
+    color: theme.textColor_dark,
+  },
+  email: {
+    fontFamily: "PlusJakartaSans-Regular",
+    fontSize: 15,
+    color: theme.textColor_light,
+  },
+  customButton: {
+    backgroundColor: theme.accentColor,
+    borderRadius: 15,
+    width: "87%",
+    height: 45,
     justifyContent: "center",
     alignItems: "center",
+    marginTop: 10,
+    alignSelf: "center",
   },
-  label: {
-    fontSize: 18,
-    color: "#000",
-    marginBottom: 10,
-  },
-  logoutButton: {
-    backgroundColor: "#4F3A7B",
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    borderRadius: 5,
-    marginTop: 20,
-  },
-  logoutButtonText: {
-    color: "#FFFFFF",
+  customButtonText: {
+    color: "white",
     fontSize: 16,
+    marginTop: -5,
+    fontFamily: "PlusJakartaSans-Bold",
   },
 });
 

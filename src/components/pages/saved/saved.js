@@ -218,6 +218,7 @@ const styles = StyleSheet.create({
     width: "48%", // Adjust the width as per your preference
     marginBottom: 16,
     backgroundColor: "white",
+    elevation: 0,
   },
 
   stopWatchHeading: {
