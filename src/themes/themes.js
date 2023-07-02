@@ -7,7 +7,11 @@ export const themes = {
 
     textColor_light: "#646477",
     textColor_dark: "#38385B",
+
     textColor_blue: "#D3DDFF",
+
+    whiteish_blue: "#D3DDFF",
+    whiteish_red: "#ffe0e4",
 
     buttonLight: "#E1E8FF",
     dangerLight: "#F8F0F9",

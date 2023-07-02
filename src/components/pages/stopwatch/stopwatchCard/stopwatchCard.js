@@ -14,13 +14,15 @@ import { SwipeRow } from "react-native-swipe-list-view";
 
 import * as Font from "expo-font";
 import EditIcon from "../../../../../assets/card_icons/pencil.png";
-import DeleteIcon from "../../../../../assets/card_icons/stop.png";
+// import DeleteIcon from "../../../../../assets/card_icons/stop.png";
+
+import { LinearGradient } from "expo-linear-gradient";
 
 // below card icons
 import PlayIcon from "../../../../../assets/card_below_icons/play.png";
 import PauseIcon from "../../../../../assets/card_below_icons/pause.png";
 import SaveIcon from "../../../../../assets/card_below_icons/bookmark.png";
-import SmallDeleteIcon from "../../../../../assets/card_below_icons/trash.png";
+import DeleteIcon from "../../../../../assets/card_below_icons/trash.png";
 
 import { themes } from "../../../../themes/themes";
 const theme = themes.default; // Change this to select a different theme
@@ -57,10 +59,25 @@ const StopwatchView = ({ id, name, time, onDelete, onRename }) => {
   return (
     <>
       <SwipeRow leftOpenValue={75} rightOpenValue={-75}>
-        <View style={styles.cardBackOptions}>
-          <Text style={styles.backTextWhite}>Left</Text>
-          <Text style={styles.backTextWhite}>Right</Text>
-        </View>
+        <LinearGradient
+          start={{ x: 0, y: 0 }}
+          end={{ x: 1, y: 0 }}
+          colors={[
+            theme.buttonColorPrimary,
+            theme.buttonColorPrimary,
+            theme.buttonColorDanger,
+            theme.buttonColorDanger,
+          ]}
+          style={styles.cardBackOptions}
+        >
+          <TouchableOpacity style={styles.backTextWhite} onPress={onDelete}>
+            <Image source={SaveIcon} style={styles.SaveIcon} />
+          </TouchableOpacity>
+
+          <TouchableOpacity>
+            <Image source={DeleteIcon} style={styles.DeleteIcon} />
+          </TouchableOpacity>
+        </LinearGradient>
 
         <View style={styles.card}>
           <View style={styles.columnContainer_2}>
@@ -208,11 +225,18 @@ const styles = StyleSheet.create({
     tintColor: theme.accentColor,
   },
   DeleteIcon: {
-    width: 17,
-    height: 17,
-    marginLeft: -2,
+    width: 26,
+    height: 26,
+    marginRight: 12,
     resizeMode: "contain",
-    tintColor: theme.buttonColorDanger,
+    tintColor: theme.whiteish_red,
+  },
+  SaveIcon: {
+    width: 23,
+    height: 23,
+    marginLeft: 12,
+    resizeMode: "contain",
+    tintColor: theme.whiteish_blue,
   },
   columnContainer_2: {
     flex: 5,
