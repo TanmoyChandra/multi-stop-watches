@@ -44,6 +44,10 @@ const Authentication = () => {
         setIsLoggedIn(true);
       }
     } catch (error) {
+      setModalTitle("Authentication Failed");
+      setModalMsg("Error checking login status.", error.toString());
+      setVisible(true);
+
       console.error("Error checking login status:", error);
     } finally {
       setIsLoading(false);
@@ -51,7 +55,9 @@ const Authentication = () => {
   };
   // dialog
   const [visible, setVisible] = React.useState(false);
-  const [dialogMsg, setDialogMsg] = React.useState(false);
+
+  const [modalTitle, setModalTitle] = React.useState("Notification");
+  const [modalMsg, setModalMsg] = React.useState("");
 
   const hideDialog = () => setVisible(false);
 
@@ -73,14 +79,15 @@ const Authentication = () => {
       saveUserLoginInfo(user);
 
       //dialog show
-      setDialogMsg(
+      setModalMsg(
         "You are registered successfully. Now you can login to your account."
       );
       setVisible(true);
       setIsRegistering(false);
     } catch (error) {
+      setModalTitle("Registration Failed");
+      setModalMsg(error.toString());
       setVisible(true);
-      setDialogMsg(error.toString());
     } finally {
       setIsProcessing(false);
     }
@@ -113,6 +120,9 @@ const Authentication = () => {
         console.error("User data not found in Firestore.");
       }
     } catch (error) {
+      setModalTitle("Authentication Failed");
+      setModalMsg(error.toString());
+      setVisible(true);
       console.error("Error logging in user:", error);
     } finally {
       setIsProcessing(false);
@@ -131,6 +141,13 @@ const Authentication = () => {
 
       console.log("User information saved to Firebase Firestore successfully.");
     } catch (error) {
+      setModalTitle("Firebase Error");
+      setModalMsg(
+        "Error saving user information to Firebase Firestore:",
+        error.toString()
+      );
+      setVisible(true);
+
       console.error(
         "Error saving user information to Firebase Firestore:",
         error
@@ -150,6 +167,10 @@ const Authentication = () => {
       await AsyncStorage.setItem("userLoginInfo", JSON.stringify(userInfo));
       console.log("User login information saved successfully.");
     } catch (error) {
+      setModalTitle("Async Storage Error");
+      setModalMsg("Error saving user login information:", error);
+      setVisible(true);
+
       console.error("Error saving user login information:", error);
     }
   };
@@ -200,10 +221,10 @@ const Authentication = () => {
       )}
       <Portal>
         <Dialog visible={visible} onDismiss={hideDialog}>
-          <Dialog.Title style={styles.title}>Notification</Dialog.Title>
+          <Dialog.Title style={styles.title}>{modalTitle}</Dialog.Title>
           <Dialog.Content>
             <Text variant="bodyMedium" style={styles.title}>
-              {dialogMsg}
+              {modalMsg}
             </Text>
           </Dialog.Content>
           <Dialog.Actions>
