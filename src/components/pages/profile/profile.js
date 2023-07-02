@@ -1,14 +1,9 @@
 import React, { useEffect, useState } from "react";
-import {
-  View,
-  TouchableOpacity,
-  StyleSheet,
-  flexDirection,
-} from "react-native";
+import { View, TouchableOpacity, StyleSheet, Text } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
 import * as Font from "expo-font";
-import { Card, Text, Button, Avatar } from "react-native-paper";
+import { Card, Button, Avatar } from "react-native-paper";
 
 import { themes } from "../../../themes/themes";
 const theme = themes.default; // Change this to select a different theme
@@ -66,11 +61,20 @@ const Profile = () => {
 
   if (!fontsLoaded) {
     return (
-      <>
+      <View style={styles.container}>
         <Text>Loading..</Text>
-      </>
+      </View>
     );
   }
+
+  const getAvatarText = () => {
+    if (userDetails && userDetails.firstName && userDetails.lastName) {
+      const firstNameFirstLetter = userDetails.firstName.charAt(0);
+      const lastNameFirstLetter = userDetails.lastName.charAt(0);
+      return `${firstNameFirstLetter}${lastNameFirstLetter}`;
+    }
+    return "";
+  };
 
   return (
     <View style={styles.container}>
@@ -79,7 +83,7 @@ const Profile = () => {
           <Card style={styles.profileCard}>
             <View style={styles.rowContainer}>
               <View style={styles.avatarContainer}>
-                <Avatar.Text size={55} label="XD" />
+                <Avatar.Text size={55} label={getAvatarText()} />
               </View>
               <View style={styles.detailsContainer}>
                 <Text style={styles.fullName}>
@@ -100,12 +104,13 @@ const Profile = () => {
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     backgroundColor: theme.primaryBackgroundColor,
-    height: "100%",
-    width: "100%",
   },
   background: {
     flex: 1,
+    // justifyContent: "center",
+    alignItems: "center",
   },
   profileCard: {
     padding: 15,
@@ -116,14 +121,14 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
   },
   rowContainer: {
-    flexDirection: "row", // Align the avatar and details horizontally
+    flexDirection: "row",
   },
   avatarContainer: {
     marginTop: 3,
     marginRight: 10,
   },
   detailsContainer: {
-    flex: 1, // Take remaining space in the row
+    flex: 1,
   },
   fullName: {
     fontFamily: "PlusJakartaSans-Regular",
