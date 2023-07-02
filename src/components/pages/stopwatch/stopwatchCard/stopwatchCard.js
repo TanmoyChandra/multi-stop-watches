@@ -72,11 +72,11 @@ const StopwatchView = ({ id, name, time, onDelete, onRename }) => {
           ]}
           style={styles.cardBackOptions}
         >
-          <TouchableOpacity onPress={onDelete}>
+          <TouchableOpacity>
             <Image source={SaveIcon} style={styles.SaveIcon} />
           </TouchableOpacity>
 
-          <TouchableOpacity>
+          <TouchableOpacity onPress={onDelete}>
             <Image source={DeleteIcon} style={styles.DeleteIcon} />
           </TouchableOpacity>
         </LinearGradient>

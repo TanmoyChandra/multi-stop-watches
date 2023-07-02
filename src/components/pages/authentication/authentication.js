@@ -32,6 +32,12 @@ const Authentication = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
 
+  // error msg dialog
+  const [visible, setVisible] = React.useState(false);
+  const [modalTitle, setModalTitle] = React.useState("Notification");
+  const [modalMsg, setModalMsg] = React.useState("");
+  const hideDialog = () => setVisible(false);
+
   useEffect(() => {
     checkLoginStatus();
   }, []);
@@ -53,13 +59,6 @@ const Authentication = () => {
       setIsLoading(false);
     }
   };
-  // dialog
-  const [visible, setVisible] = React.useState(false);
-
-  const [modalTitle, setModalTitle] = React.useState("Notification");
-  const [modalMsg, setModalMsg] = React.useState("");
-
-  const hideDialog = () => setVisible(false);
 
   const registerUser = async () => {
     setIsProcessing(true);
@@ -175,18 +174,18 @@ const Authentication = () => {
     }
   };
 
-  if (isLoading || isProcessing) {
-    return (
-      <View style={styles.loadingOverlay}>
-        <ActivityIndicator
-          animating={true}
-          color={theme.accentColor}
-          size={50}
-          style={styles.loader}
-        />
-      </View>
-    );
-  }
+  // if (isLoading || isProcessing) {
+  //   return (
+  //     <View style={styles.loadingOverlay}>
+  //       <ActivityIndicator
+  //         animating={true}
+  //         color={theme.accentColor}
+  //         size={50}
+  //         style={styles.loader}
+  //       />
+  //     </View>
+  //   );
+  // }
 
   return (
     <>
@@ -208,6 +207,17 @@ const Authentication = () => {
             onTogglePress={() => setIsRegistering((prevValue) => !prevValue)}
           />
           {isProcessing && (
+            <View style={styles.loadingOverlay}>
+              <ActivityIndicator
+                animating={true}
+                color={theme.accentColor}
+                size={50}
+                style={styles.loader}
+              />
+            </View>
+          )}
+
+          {isLoading && (
             <View style={styles.loadingOverlay}>
               <ActivityIndicator
                 animating={true}
@@ -249,7 +259,7 @@ const styles = StyleSheet.create({
   },
   loadingOverlay: {
     ...StyleSheet.absoluteFill,
-    // backgroundColor: "rgba(255, 255, 255, 0.7)",
+    backgroundColor: "rgba(255, 255, 255, 0.6)",
     justifyContent: "center",
     alignItems: "center",
   },
