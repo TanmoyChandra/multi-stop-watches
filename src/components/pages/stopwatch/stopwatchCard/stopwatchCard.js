@@ -126,19 +126,21 @@ const StopwatchView = ({ id, name, time, onDelete, onRename }) => {
               onChangeText={setNewName}
               value={newName}
             />
-            <TouchableOpacity
-              style={styles.submitButton}
-              onPress={handleRename}
-            >
-              <Text style={styles.submitButtonText}>Submit</Text>
-            </TouchableOpacity>
 
-            <TouchableOpacity
-              style={styles.cancelButton}
-              onPress={() => setModalVisible(false)}
-            >
-              <Text style={styles.cancelButtonText}>Cancel</Text>
-            </TouchableOpacity>
+            <View style={styles.buttonContainer}>
+              <TouchableOpacity
+                style={[styles.cancelButton, { marginRight: 8 }]}
+                onPress={() => setModalVisible(false)}
+              >
+                <Text style={styles.cancelButtonText}>Cancel</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={[styles.submitButton, { marginLeft: 8 }]}
+                onPress={handleRename}
+              >
+                <Text style={styles.submitButtonText}>Submit</Text>
+              </TouchableOpacity>
+            </View>
           </View>
         </View>
       </Modal>
@@ -254,13 +256,13 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     color: theme.textColor_dark,
     padding: 8,
-    marginBottom: 16,
+    marginBottom: 10,
     fontFamily: "PlusJakartaSans-Regular",
   },
   submitButton: {
     backgroundColor: theme.accentColor,
     borderRadius: 15,
-    width: "100%",
+    width: "45%",
     height: 45,
     justifyContent: "center",
     alignItems: "center",
@@ -272,11 +274,17 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   cancelButton: {
-    marginTop: 8,
+    backgroundColor: theme.buttonLight,
+    borderRadius: 15,
+    width: "45%",
+    height: 45,
+    justifyContent: "center",
     alignItems: "center",
+    marginTop: 10,
+    alignSelf: "center",
   },
   cancelButtonText: {
-    color: "blue",
+    color: theme.accentColor,
     fontWeight: "bold",
   },
 
@@ -304,6 +312,11 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     padding: 15,
     marginTop: 20,
+  },
+
+  buttonContainer: {
+    flexDirection: "row",
+    justifyContent: "center",
   },
 });
 
